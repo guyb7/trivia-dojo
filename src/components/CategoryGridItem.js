@@ -9,7 +9,9 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: '100%',
+    width: '100%'
   },
   icon: {
     height: 40,
@@ -25,19 +27,21 @@ const style = {
 class CategoryGridItem extends Component {
   render() {
     return (
-      <ButtonBase
-          focusRipple
-          style={{
-            ...style.button,
-            ...this.props.style
-          }}
-          onClick={() => this.props.onClick(this.props)}
-        >
-        <Icon type={this.props.icon} style={style.icon} />
-        <div style={style.title}>
-          {this.props.title}
-        </div>
-      </ButtonBase>
+      <div style={{ ...this.props.style }}>
+        <ButtonBase
+            focusRipple
+            style={{
+              ...style.button,
+              ...this.props.buttonStyle
+            }}
+            onClick={() => this.props.onClick(this.props)}
+          >
+          <Icon type={this.props.icon} style={style.icon} />
+          <div style={style.title}>
+            {this.props.title}
+          </div>
+        </ButtonBase>
+      </div>
     );
   }
 }

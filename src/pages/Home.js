@@ -11,14 +11,15 @@ const style = {
     flexWrap: 'wrap',
     maxWidth: 400,
     marginLeft: 'auto',
-    marginTop: 50,
+    marginTop: 60,
     marginRight: 'auto',
-    marginBottom: 50,
+    marginBottom: 60
   },
   categoriesItem: {
+    flexGrow: 1,
     height: 100,
-    width: 100,
-    margin: 10
+    padding: 5,
+    width: '30%'
   },
   bottomNavigation: {
     position: 'fixed',
