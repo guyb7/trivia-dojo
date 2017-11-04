@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import TopBar from './components/TopBar';
 import Home from './pages/Home';
+import QuizCasual from './pages/QuizCasual';
 import './App.css';
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
       <TopBar />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/casual/:category" component={QuizCasual} />
       </Switch>
     </div>
   </Provider>

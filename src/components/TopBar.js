@@ -56,7 +56,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setPercentage: () => {
-      // dispatch(setLevel(ownProps.filter))
       dispatch(setLevel({ percentage: 50 }))
     }
   }

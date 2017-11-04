@@ -1,3 +1,5 @@
+import Categories from './categories'
+
 export const setUser = user => {
   return {
     type: 'SET_USER',
@@ -12,10 +14,4 @@ export const setLevel = level => {
   }
 }
 
-export const addCategory = category => {
-  return {
-    type: 'ADD_CATEGORY',
-    title: category.title,
-    icon: category.icon
-  }
-}
+export const loadCategories = Categories.loadCategories

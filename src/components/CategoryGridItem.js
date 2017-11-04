@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ButtonBase from 'material-ui/ButtonBase'
-import StarIcon from 'material-ui-icons/Star'
+import Icon from './Icon'
 
 const style = {
   button: {
@@ -31,8 +31,9 @@ class CategoryGridItem extends Component {
             ...style.button,
             ...this.props.style
           }}
+          onClick={() => this.props.onClick(this.props)}
         >
-        <StarIcon style={style.icon} />
+        <Icon type={this.props.icon} style={style.icon} />
         <div style={style.title}>
           {this.props.title}
         </div>

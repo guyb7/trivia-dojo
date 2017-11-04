@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
+import { loadCategories } from '../store/actions'
 import CategoryGridItem from '../components/CategoryGridItem'
 import GameTypeNavigation from '../components/GameTypeNavigation'
 
@@ -26,70 +28,52 @@ const style = {
 }
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: []
-    }
-  }
-
   componentDidMount() {
-    this.getCategories();
+    this.props.getCategories()
   }
 
-  getCategories() {
-    this.setState(
-    {
-      ...this.state,
-      categories: [
-        {
-          title: 'Music',
-          icon: 'jill111'
-        }, {
-          title: 'Geography',
-          icon: 'jill111'
-        }, {
-          title: 'History',
-          icon: 'jill111'
-        }, {
-          title: 'Sports',
-          icon: 'jill111'
-        }, {
-          title: 'Movies',
-          icon: 'jill111'
-        }, {
-          title: 'Science',
-          icon: 'jill111'
-        }, {
-          title: 'Tech',
-          icon: 'jill111'
-        }, {
-          title: 'Animals',
-          icon: 'jill111'
-        }, {
-          title: 'Pop',
-          icon: 'jill111'
-        }
-      ]
-    }
-  )}
+  startCasualQuiz(category) {
+    this.props.history.push('/casual/' + category.id)
+  }
 
   render() {
     return (
       <div>
         <div style={style.categoriesList}>
-          {this.state.categories.map((category, n) => (
+          {this.props.categories.map((category, n) => (
             <CategoryGridItem
-              key={n}
+              key={category.id}
               style={style.categoriesItem}
+              id={category.id}
               title={category.title}
+              icon={category.icon}
+              onClick={category => this.startCasualQuiz(category)}
               />
           ))}
         </div>
         <GameTypeNavigation style={style.bottomNavigation} />
       </div>
-    );
+    )
   }
 }
 
-export default Home;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    categories: state.categories
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getCategories: () => {
+      dispatch(loadCategories())
+    }
+  }
+}
+
+const connectedHome = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)
+
+export default connectedHome
