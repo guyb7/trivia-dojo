@@ -10,6 +10,15 @@ const style = {
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  icon: {
+    height: 40,
+    width: 40
+  },
+  title: {
+    color: '#4A4A4A',
+    fontSize: 14,
+    fontWeight: 300
   }
 }
 
@@ -23,8 +32,10 @@ class CategoryGridItem extends Component {
             ...this.props.style
           }}
         >
-        <StarIcon />
-        {this.props.title}
+        <StarIcon style={style.icon} />
+        <div style={style.title}>
+          {this.props.title}
+        </div>
       </ButtonBase>
     );
   }
