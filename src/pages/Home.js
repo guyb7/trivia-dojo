@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import Paper from 'material-ui/Paper'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import CategoryGridItem from './components/CategoryGridItem'
+import CategoryGridItem from '../components/CategoryGridItem'
+import GameTypeNavigation from '../components/GameTypeNavigation'
 
 const style = {
   categoriesList: {
@@ -19,11 +18,10 @@ const style = {
     width: 100,
     margin: 10
   },
-  navigation: {
+  bottomNavigation: {
     position: 'fixed',
     bottom: 0,
-    left: 0,
-    width: '100%'
+    left: 0
   }
 }
 
@@ -88,19 +86,7 @@ class Home extends Component {
               />
           ))}
         </div>
-        <Paper style={style.navigation}>
-          <Tabs
-            value={0}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-            fullWidth
-          >
-            <Tab label="Casual" />
-            <Tab label="Ranked" disabled />
-            <Tab label="Events" disabled />
-          </Tabs>
-        </Paper>
+        <GameTypeNavigation style={style.bottomNavigation} />
       </div>
     );
   }
