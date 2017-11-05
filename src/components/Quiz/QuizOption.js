@@ -11,7 +11,7 @@ const style = {
     backgroundColor: '#DFE4E8'
   },
   selected: {
-    backgroundColor: 'red'
+    backgroundColor: '#007ACE'
   }
 }
 

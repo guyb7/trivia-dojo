@@ -42,7 +42,7 @@ class Question extends Component {
             <div>
               {
                 question.options.map(option => {
-                  let optionStatus = 'default'
+                  const optionStatus = question.chosenAnswer === option ? 'selected' : 'default'
                   return (
                     <QuizOption
                       text={option}
