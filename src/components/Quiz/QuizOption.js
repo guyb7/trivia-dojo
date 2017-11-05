@@ -25,7 +25,9 @@ class QuizOption extends Component {
           ...style.base,
           ...style[this.props.status],
           ...this.props.style
-          }}>
+          }}
+          onClick={this.props.onClick}
+          >
         {this.props.text}
       </Button>
     )

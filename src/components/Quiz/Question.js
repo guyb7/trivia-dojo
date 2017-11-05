@@ -43,9 +43,13 @@ class Question extends Component {
               {
                 question.options.map(option => {
                   let optionStatus = 'default'
-                  return <QuizOption
-                    text={option}
-                    status={optionStatus} />
+                  return (
+                    <QuizOption
+                      text={option}
+                      status={optionStatus}
+                      onClick={() => this.props.onAnswer(question.id, option)}
+                      />
+                  )
                 })
               }
             </div>

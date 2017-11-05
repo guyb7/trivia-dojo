@@ -60,6 +60,7 @@ class QuizCasual extends Component {
     this.state = {
       category: false,
       isLoading: false,
+      isAllAnswered: false,
       currentQuestion: 0,
       quizQuestions: []
     }
@@ -111,14 +112,31 @@ class QuizCasual extends Component {
     })
   }
 
-  isAllAnswered() {
+  addAnswer(question, answer) {
+    const current = this.state.quizQuestions[this.state.currentQuestion]
+    if (current.id === question) {
+      current.chosenAnswer = answer
+      this.goToNextUnanswered()
+    } else {
+      console.error('Answered not current question?', question)
+    }
+  }
+
+  goToNextUnanswered() {
     const questions = this.state.quizQuestions
     for (var i = 0; i < questions.length; i++) {
       if (questions[i].chosenAnswer === null) {
-        return false
+        this.setState({
+          ...this.state,
+          currentQuestion: i
+        })
+        return
       }
     }
-    return true
+    this.setState({
+      ...this.state,
+      isAllAnswered: true
+    })
   }
 
   render() {
@@ -144,12 +162,13 @@ class QuizCasual extends Component {
             <Question
               style={style.question}
               question={this.state.quizQuestions[this.state.currentQuestion]}
+              onAnswer={(q, a) => this.addAnswer(q, a)}
               />
             <Button
               raised
               style={{
                 ...style.submit,
-                visibility: this.isAllAnswered() ? 'visible' : 'hidden' }}>
+                visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}>
               Submit
             </Button>
             <QuizProgress
