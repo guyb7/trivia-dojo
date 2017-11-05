@@ -10,8 +10,6 @@ const style = {
     position: 'relative'
   },
   question: {
-    color: '#4A4A4A',
-    backgroundColor: '#E8E8E8',
     width: 30,
     height: 30,
     display: 'flex',
@@ -20,9 +18,27 @@ const style = {
     borderRadius: '50%',
     zIndex: 60
   },
+  questionStates: {
+    empty: {
+      color: '#4A4A4A',
+      backgroundColor: '#DFE4E8'
+    },
+    chosen: {
+      backgroundColor: '#007ACE'
+    },
+    correct: {
+      backgroundColor: '#50B83C'
+    },
+    wrong: {
+      backgroundColor: '#ED6347'
+    },
+    current: {
+      boxShadow: 'inset 0 0 4px #212B35'
+    }
+  },
   line: {
     width: '99%',
-    borderBottom: '1px solid #ccc',
+    borderBottom: '1px solid #DFE4E8',
     position: 'absolute',
     top: 15,
     left: 2,
@@ -33,18 +49,38 @@ const style = {
 class QuizProgress extends Component {
   render() {
     return (
-      <div style={style.container}>
+      <div style={{ ...style.container, ...this.props.style }}>
         {
           this.props.questions.map((q, n) => {
-            return <div style={style.question}>
+            let questionStyle
+            if (q.chosenAnswer === null) {
+              questionStyle = style.questionStates.empty
+            } else if (q.actualAnswer === null) {
+              questionStyle = style.questionStates.chosen
+            } else if (q.actualAnswer === q.chosenAnswer) {
+              questionStyle = style.questionStates.correct
+            } else {
+              questionStyle = style.questionStates.wrong
+            }
+            if (n === this.props.current) {
+              questionStyle = {
+                ...questionStyle,
+                ...style.questionStates.current
+              }
+            }
+            return <div
+              key={q.id}
+              style={{ ...style.question, ...questionStyle }}
+              onClick={() => this.props.onChange(n)}
+              >
               {n + 1}
             </div>
           })
         }
         <div style={style.line}></div>
       </div>
-    );
+    )
   }
 }
 
-export default QuizProgress;
+export default QuizProgress

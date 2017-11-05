@@ -45,6 +45,7 @@ class QuizCasual extends Component {
     this.state = {
       category: false,
       isLoading: false,
+      currentQuestion: 0,
       quizQuestions: []
     }
   }
@@ -62,7 +63,13 @@ class QuizCasual extends Component {
       this.setState({
         ...this.state,
         isLoading: false,
-        quizQuestions: response.data.questions
+        quizQuestions: response.data.questions.map(q => {
+          return {
+            ...q,
+            chosenAnswer: null,
+            actualAnswer: null
+          }
+        })
       })
     })
     .catch(error => {
@@ -80,6 +87,13 @@ class QuizCasual extends Component {
     }
     console.error('No such category: ' + urlCategoryId)
     return false
+  }
+
+  changeCurrentQuestion(n) {
+    this.setState({
+      ...this.state,
+      currentQuestion: n
+    })
   }
 
   render() {
@@ -104,7 +118,11 @@ class QuizCasual extends Component {
           <div style={style.quizContainer}>
             <div>Question</div>
             <div>Submit</div>
-            <QuizProgress questions={this.state.quizQuestions} />
+            <QuizProgress
+              questions={this.state.quizQuestions}
+              current={this.state.currentQuestion}
+              onChange={n => this.changeCurrentQuestion(n)}
+              />
           </div>
         }
       </div>
