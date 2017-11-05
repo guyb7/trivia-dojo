@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
+
+import QuizProgress from '../components/Quiz/QuizProgress'
+import { CircularProgress } from 'material-ui/Progress'
 
 import Icon from '../components/Icon'
 
@@ -18,6 +22,20 @@ const style = {
     height: 20,
     width: 20,
     marginRight: 5
+  },
+  loadingContainer: {
+    minHeight: '90vh',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  quizContainer: {
+    minHeight: '95vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'stretch'
   }
 }
 
@@ -25,7 +43,9 @@ class QuizCasual extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      category: false
+      category: false,
+      isLoading: false,
+      quizQuestions: []
     }
   }
 
@@ -33,7 +53,20 @@ class QuizCasual extends Component {
     const category = this.getCategory()
     this.setState({
       ...this.state,
-      category
+      category,
+      isLoading: true
+    })
+
+    axios.get('/api/quiz/music')
+    .then(response => {
+      this.setState({
+        ...this.state,
+        isLoading: false,
+        quizQuestions: response.data.questions
+      })
+    })
+    .catch(error => {
+      console.error(error)
     })
   }
 
@@ -58,6 +91,20 @@ class QuizCasual extends Component {
           <div style={style.categoryContainer}>
             <Icon type={category.icon} style={style.categoryIcon} />
             {category.title} (Casual)
+          </div>
+        }
+        {
+          this.state.isLoading &&
+          <div style={style.loadingContainer}>
+            <CircularProgress  />
+          </div>
+        }
+        {
+          !this.state.isLoading &&
+          <div style={style.quizContainer}>
+            <div>Question</div>
+            <div>Submit</div>
+            <QuizProgress questions={this.state.quizQuestions} />
           </div>
         }
       </div>
