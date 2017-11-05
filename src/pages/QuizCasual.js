@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+
+import Icon from '../components/Icon'
 
 const style = {
   container: {
@@ -7,10 +9,34 @@ const style = {
     fontSize: 14,
     fontWeight: 300,
     padding: 10
+  },
+  categoryContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  categoryIcon: {
+    height: 20,
+    width: 20,
+    marginRight: 5
   }
 }
 
 class QuizCasual extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      category: false
+    }
+  }
+
+  componentDidMount() {
+    const category = this.getCategory()
+    this.setState({
+      ...this.state,
+      category
+    })
+  }
+
   getCategory() {
     const categories = this.props.categories
     const urlCategoryId = this.props.match.params.category
@@ -24,11 +50,18 @@ class QuizCasual extends Component {
   }
 
   render() {
+    const category = this.state.category
     return (
       <div style={style.container}>
-        {this.getCategory().title} (Casual)
+        {
+          category &&
+          <div style={style.categoryContainer}>
+            <Icon type={category.icon} style={style.categoryIcon} />
+            {category.title} (Casual)
+          </div>
+        }
       </div>
-    );
+    )
   }
 }
 
