@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
+import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
+import Button from 'material-ui/Button'
 import { CircularProgress } from 'material-ui/Progress'
 
 import Icon from '../components/Icon'
@@ -36,6 +38,19 @@ const style = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'stretch'
+  },
+  question: {
+    flexGrow: 1
+  },
+  submit: {
+    backgroundColor: '#50B83C',
+    color: '#fff',
+    marginTop: 20,
+    marginBottom: 20
+  },
+  quizProgress: {
+    marginTop: 10,
+    marginBottom: 10
   }
 }
 
@@ -96,6 +111,16 @@ class QuizCasual extends Component {
     })
   }
 
+  isAllAnswered() {
+    const questions = this.state.quizQuestions
+    for (var i = 0; i < questions.length; i++) {
+      if (questions[i].chosenAnswer === null) {
+        return false
+      }
+    }
+    return true
+  }
+
   render() {
     const category = this.state.category
     return (
@@ -116,11 +141,21 @@ class QuizCasual extends Component {
         {
           !this.state.isLoading &&
           <div style={style.quizContainer}>
-            <div>Question</div>
-            <div>Submit</div>
+            <Question
+              style={style.question}
+              question={this.state.quizQuestions[this.state.currentQuestion]}
+              />
+            <Button
+              raised
+              style={{
+                ...style.submit,
+                visibility: this.isAllAnswered() ? 'visible' : 'hidden' }}>
+              Submit
+            </Button>
             <QuizProgress
               questions={this.state.quizQuestions}
               current={this.state.currentQuestion}
+              style={style.quizProgress}
               onChange={n => this.changeCurrentQuestion(n)}
               />
           </div>
