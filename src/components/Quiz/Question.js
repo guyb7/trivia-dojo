@@ -44,13 +44,29 @@ class Question extends Component {
             <div>
               {
                 question.options.map(option => {
-                  const optionStatus = question.chosenAnswer === option ? 'selected' : 'default'
+                  let optionStatus
+                  if (this.props.readOnly) {
+                    if (question.actualAnswer === option) {
+                      optionStatus = 'correct'
+                    } else if (question.chosenAnswer === option) {
+                      optionStatus = 'wrong'
+                    } else {
+                      optionStatus = 'default'
+                    }
+                  } else {
+                    if (question.chosenAnswer === option) {
+                      optionStatus = 'selected'
+                    } else {
+                      optionStatus = 'default'
+                    }
+                  }
                   return (
                     <QuizOption
                       key={option}
                       text={option}
                       status={optionStatus}
                       onClick={() => this.props.onAnswer(question.id, option)}
+                      disabled={this.props.readOnly}
                       />
                   )
                 })

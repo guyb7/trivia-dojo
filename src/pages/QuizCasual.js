@@ -70,7 +70,8 @@ class QuizCasual extends Component {
       isSubmitted: false,
       isSubmitting: false,
       currentQuestion: 0,
-      quizQuestions: []
+      quizQuestions: [],
+      isResultsVisible: false
     }
   }
 
@@ -119,7 +120,8 @@ class QuizCasual extends Component {
   changeCurrentQuestion(n) {
     this.setState({
       ...this.state,
-      currentQuestion: n
+      currentQuestion: n,
+      isResultsVisible: false
     })
   }
 
@@ -157,7 +159,9 @@ class QuizCasual extends Component {
     this.setState({
       ...this.state,
       isSubmitted: true,
-      isSubmitting: true
+      isSubmitting: true,
+      isResultsVisible: true,
+      currentQuestion: 0
     })
     const questions = this.state.quizQuestions.map(q => {
       return {
@@ -167,7 +171,20 @@ class QuizCasual extends Component {
     })
     axios.post('/api/quiz', { questions })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
+      console.log('results', response.data.results)
+      const questionsWithAnswers = this.state.quizQuestions.map(q => {
+        return {
+          ...q,
+          actualAnswer: response.data.results[q.id].correctAnswer
+        }
+      })
+      this.setState({
+        ...this.state,
+        isSubmitting: false,
+        quizQuestions: questionsWithAnswers,
+        quizResults: response.data.summary
+      })
     })
     .catch(error => {
       console.error(error)
@@ -192,12 +209,34 @@ class QuizCasual extends Component {
           </div>
         }
         {
-          !this.state.isSubmitted && !this.state.isLoading &&
+          !this.state.isLoading && !this.state.isResultsVisible &&
           <Question
             style={style.question}
             question={this.state.quizQuestions[this.state.currentQuestion]}
             onAnswer={(q, a) => this.addAnswer(q, a)}
+            readOnly={this.state.isSubmitted}
             />
+        }
+        {
+          this.state.isResultsVisible &&
+          <QuizResults
+            style={style.quizResults}
+            questions={this.state.quizQuestions}
+            updateState={newState => {
+              this.setState({
+                ...this.state,
+                ...newState
+              })
+            }}
+            />
+        }
+        {
+          this.state.isSubmitted && !this.state.isSubmitting &&
+          <Button
+            raised
+            style={style.submit}>
+            Continue
+          </Button>
         }
         {
           !this.state.isSubmitted && !this.state.isLoading &&
@@ -209,9 +248,6 @@ class QuizCasual extends Component {
               onClick={() => this.submitQuiz()}>
             Submit
           </Button>
-        }
-        {
-          this.state.isSubmitted && <QuizResults style={style.quizResults} />
         }
         {
           !this.state.isLoading &&

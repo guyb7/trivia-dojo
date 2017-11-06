@@ -14,6 +14,12 @@ const style = {
   },
   selected: {
     backgroundColor: Colors.blue.light
+  },
+  correct: {
+    backgroundColor: Colors.green.default
+  },
+  wrong: {
+    backgroundColor: Colors.red.default
   }
 }
 
@@ -28,6 +34,7 @@ class QuizOption extends Component {
           ...this.props.style
           }}
           onClick={this.props.onClick}
+          disabled={this.props.disabled}
           >
         {this.props.text}
       </Button>

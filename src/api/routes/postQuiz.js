@@ -8,15 +8,15 @@ const mockAnswers = {
 export default (req, res) => {
   const success = () => {
     let score = 0
-    const results = req.body.questions.map(q => {
+    const results = req.body.questions.reduce((acc, q) => {
       score += q.answer === mockAnswers[q.id] ? 30 : -20
-      return {
-        id: q.id,
+      acc[q.id] = {
         correctAnswer: mockAnswers[q.id],
         isCorrect: q.answer === mockAnswers[q.id],
         score: q.answer === mockAnswers[q.id] ? 30 : -20
       }
-    })
+      return acc
+    }, {})
     res.json({
       success: true,
       results,
