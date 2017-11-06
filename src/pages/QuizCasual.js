@@ -71,6 +71,7 @@ class QuizCasual extends Component {
       isSubmitting: false,
       currentQuestion: 0,
       quizQuestions: [],
+      quizResults: false,
       isResultsVisible: false
     }
   }
@@ -161,7 +162,7 @@ class QuizCasual extends Component {
       isSubmitted: true,
       isSubmitting: true,
       isResultsVisible: true,
-      currentQuestion: 0
+      currentQuestion: 999
     })
     const questions = this.state.quizQuestions.map(q => {
       return {
@@ -172,7 +173,6 @@ class QuizCasual extends Component {
     axios.post('/api/quiz', { questions })
     .then(response => {
       console.log(response.data)
-      console.log('results', response.data.results)
       const questionsWithAnswers = this.state.quizQuestions.map(q => {
         return {
           ...q,
@@ -221,13 +221,8 @@ class QuizCasual extends Component {
           this.state.isResultsVisible &&
           <QuizResults
             style={style.quizResults}
-            questions={this.state.quizQuestions}
-            updateState={newState => {
-              this.setState({
-                ...this.state,
-                ...newState
-              })
-            }}
+            isSubmitting={this.state.isSubmitting}
+            results={this.state.quizResults}
             />
         }
         {
