@@ -81,7 +81,10 @@ class QuizCasual extends Component {
       category,
       isLoading: true
     })
+    this.getNewQuiz()
+  }
 
+  getNewQuiz() {
     axios.get('/api/quiz/music')
     .then(response => {
       this.setState({
@@ -155,6 +158,19 @@ class QuizCasual extends Component {
       ...this.state,
       isSubmitted: true,
       isSubmitting: true
+    })
+    const questions = this.state.quizQuestions.map(q => {
+      return {
+        id: q.id,
+        answer: q.chosenAnswer
+      }
+    })
+    axios.post('/api/quiz', { questions })
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.error(error)
     })
   }
 
