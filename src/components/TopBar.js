@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { setLevel } from '../store/actions'
 import { CircularProgress } from 'material-ui/Progress'
 
+import Colors from './Colors'
+
 const style = {
   container: {
     position: 'fixed',
@@ -20,7 +22,7 @@ const style = {
     position: 'relative'
   },
   levelText: {
-    color: '#9B9B9B',
+    color: Colors.ink.lightest,
     position: 'absolute',
     width: 20,
     textAlign: 'center',
@@ -29,7 +31,7 @@ const style = {
     top: 11
   },
   levelProgress: {
-    color: '#9B9B9B'
+    color: Colors.ink.lightest
   }
 }
 

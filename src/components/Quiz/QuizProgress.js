@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Colors from '../Colors'
+
 const style = {
   container: {
     width: '100%',
@@ -20,17 +22,20 @@ const style = {
   },
   questionStates: {
     empty: {
-      color: '#4A4A4A',
-      backgroundColor: '#DFE4E8'
+      color: Colors.ink.default,
+      backgroundColor: Colors.sky.default
     },
     chosen: {
-      backgroundColor: '#007ACE'
+      color: Colors.blue.text,
+      backgroundColor: Colors.blue.light
     },
     correct: {
-      backgroundColor: '#50B83C'
+      color: Colors.green.text,
+      backgroundColor: Colors.green.default
     },
     wrong: {
-      backgroundColor: '#ED6347'
+      color: Colors.red.text,
+      backgroundColor: Colors.red.default
     },
     current: {
       boxShadow: 'inset 0 0 4px #212B35'

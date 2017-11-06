@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import QuizOption from './QuizOption'
 
+import Colors from '../Colors'
+
 const style = {
   container: {
     width: '100%',
@@ -19,7 +21,7 @@ const style = {
     flexGrow: 1
   },
   questionText: {
-    color: '#212B35',
+    color: Colors.ink.default,
     fontSize: 18,
     textAlign: 'center',
     fontWeight: 300,
@@ -45,6 +47,7 @@ class Question extends Component {
                   const optionStatus = question.chosenAnswer === option ? 'selected' : 'default'
                   return (
                     <QuizOption
+                      key={option}
                       text={option}
                       status={optionStatus}
                       onClick={() => this.props.onAnswer(question.id, option)}

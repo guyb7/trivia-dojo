@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+
 import ButtonBase from 'material-ui/ButtonBase'
+
 import Icon from './Icon'
+import Colors from './Colors'
 
 const style = {
   button: {
-    backgroundColor: '#E8E8E8',
-    color: '#9B9B9B',
+    backgroundColor: Colors.sky.light,
+    color: Colors.ink.lightest,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
@@ -18,7 +21,7 @@ const style = {
     width: 40
   },
   title: {
-    color: '#4A4A4A',
+    color: Colors.ink.default,
     fontSize: 14,
     fontWeight: 300
   }

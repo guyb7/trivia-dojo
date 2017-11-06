@@ -9,10 +9,11 @@ import Button from 'material-ui/Button'
 import { CircularProgress } from 'material-ui/Progress'
 
 import Icon from '../components/Icon'
+import Colors from '../components/Colors'
 
 const style = {
   container: {
-    color: '#9B9B9B',
+    color: Colors.ink.lightest,
     fontSize: 14,
     fontWeight: 300,
     padding: 10
@@ -44,8 +45,8 @@ const style = {
     flexGrow: 1
   },
   submit: {
-    backgroundColor: '#50B83C',
-    color: '#fff',
+    backgroundColor: Colors.green.default,
+    color: Colors.white,
     marginTop: 20,
     marginBottom: 20
   },

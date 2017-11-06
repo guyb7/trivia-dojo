@@ -6,7 +6,6 @@ const style = {
 
 class QuizResults extends Component {
   render() {
-    console.log('option', this.props.option)
     return (
       <div style={style.container}>
         Results...

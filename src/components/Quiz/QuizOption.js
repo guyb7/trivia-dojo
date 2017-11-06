@@ -2,22 +2,23 @@ import React, { Component } from 'react'
 
 import Button from 'material-ui/Button'
 
+import Colors from '../Colors'
+
 const style = {
   base: {
     width: '100%',
     marginBottom: 10
   },
   default: {
-    backgroundColor: '#DFE4E8'
+    backgroundColor: Colors.sky.default
   },
   selected: {
-    backgroundColor: '#007ACE'
+    backgroundColor: Colors.blue.light
   }
 }
 
 class QuizOption extends Component {
   render() {
-    console.log('option', this.props.option)
     return (
       <Button
         raised
