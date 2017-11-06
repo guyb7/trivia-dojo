@@ -34,7 +34,10 @@ class Home extends Component {
   }
 
   startCasualQuiz(category) {
-    this.props.history.push('/casual/' + category.id)
+    //TODO prevent multiple clicks during delay
+    setTimeout(() => {
+      this.props.history.push('/casual/' + category.id)
+    }, 400)
   }
 
   render() {

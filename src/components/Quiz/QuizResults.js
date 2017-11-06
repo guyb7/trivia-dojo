@@ -7,7 +7,7 @@ const style = {
 class QuizResults extends Component {
   render() {
     return (
-      <div style={style.container}>
+      <div style={{ ...style.container, ...this.props.style }}>
         Results...
       </div>
     )

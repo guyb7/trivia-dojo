@@ -9,9 +9,15 @@ import Home from './pages/Home';
 import QuizCasual from './pages/QuizCasual';
 import './App.css';
 
+const style = {
+  container: {
+    height: '100%'
+  }
+}
+
 const App = () => (
   <Provider store={store}>
-    <div>
+    <div style={style.container}>
       <TopBar />
       <Switch>
         <Route exact path="/" component={Home} />

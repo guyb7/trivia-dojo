@@ -16,7 +16,13 @@ const style = {
     color: Colors.ink.lightest,
     fontSize: 14,
     fontWeight: 300,
-    padding: 10
+    padding: 10,
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    height: '100%'
   },
   categoryContainer: {
     display: 'flex',
@@ -28,18 +34,14 @@ const style = {
     marginRight: 5
   },
   loadingContainer: {
-    minHeight: '90vh',
-    width: '100%',
+    flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%'
   },
-  quizContainer: {
-    minHeight: '95vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'stretch'
+  loading: {
+    color: Colors.ink.lightest
   },
   question: {
     flexGrow: 1
@@ -51,8 +53,10 @@ const style = {
     marginBottom: 20
   },
   quizProgress: {
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 10
+  },
+  quizResults: {
+    flexGrow: 1
   }
 }
 
@@ -120,7 +124,10 @@ class QuizCasual extends Component {
     const current = this.state.quizQuestions[this.state.currentQuestion]
     if (current.id === question) {
       current.chosenAnswer = answer
-      this.goToNextUnanswered()
+      //TODO prevent multiple clicks during delay
+      setTimeout(() => {
+        this.goToNextUnanswered()
+      }, 400)
     } else {
       console.error('Answered not current question?', question)
     }
@@ -165,35 +172,39 @@ class QuizCasual extends Component {
         {
           !this.state.isSubmitted && this.state.isLoading &&
           <div style={style.loadingContainer}>
-            <CircularProgress  />
+            <CircularProgress style={style.loading} />
           </div>
         }
         {
           !this.state.isSubmitted && !this.state.isLoading &&
-          <div style={style.quizContainer}>
-            <Question
-              style={style.question}
-              question={this.state.quizQuestions[this.state.currentQuestion]}
-              onAnswer={(q, a) => this.addAnswer(q, a)}
-              />
-            <Button
-              raised
-              style={{
-                ...style.submit,
-                visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}
-                onClick={() => this.submitQuiz()}>
-              Submit
-            </Button>
-            <QuizProgress
-              questions={this.state.quizQuestions}
-              current={this.state.currentQuestion}
-              style={style.quizProgress}
-              onChange={n => this.changeCurrentQuestion(n)}
-              />
-          </div>
+          <Question
+            style={style.question}
+            question={this.state.quizQuestions[this.state.currentQuestion]}
+            onAnswer={(q, a) => this.addAnswer(q, a)}
+            />
         }
         {
-          this.state.isSubmitted && <QuizResults />
+          !this.state.isSubmitted && !this.state.isLoading &&
+          <Button
+            raised
+            style={{
+              ...style.submit,
+              visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}
+              onClick={() => this.submitQuiz()}>
+            Submit
+          </Button>
+        }
+        {
+          this.state.isSubmitted && <QuizResults style={style.quizResults} />
+        }
+        {
+          !this.state.isLoading &&
+          <QuizProgress
+            questions={this.state.quizQuestions}
+            current={this.state.currentQuestion}
+            style={style.quizProgress}
+            onChange={n => this.changeCurrentQuestion(n)}
+            />
         }
       </div>
     )
