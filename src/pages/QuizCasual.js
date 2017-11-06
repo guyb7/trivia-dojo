@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
+import QuizResults from '../components/Quiz/QuizResults'
 import Button from 'material-ui/Button'
 import { CircularProgress } from 'material-ui/Progress'
 
@@ -61,6 +62,8 @@ class QuizCasual extends Component {
       category: false,
       isLoading: false,
       isAllAnswered: false,
+      isSubmitted: false,
+      isSubmitting: false,
       currentQuestion: 0,
       quizQuestions: []
     }
@@ -139,6 +142,14 @@ class QuizCasual extends Component {
     })
   }
 
+  submitQuiz() {
+    this.setState({
+      ...this.state,
+      isSubmitted: true,
+      isSubmitting: true
+    })
+  }
+
   render() {
     const category = this.state.category
     return (
@@ -151,13 +162,13 @@ class QuizCasual extends Component {
           </div>
         }
         {
-          this.state.isLoading &&
+          !this.state.isSubmitted && this.state.isLoading &&
           <div style={style.loadingContainer}>
             <CircularProgress  />
           </div>
         }
         {
-          !this.state.isLoading &&
+          !this.state.isSubmitted && !this.state.isLoading &&
           <div style={style.quizContainer}>
             <Question
               style={style.question}
@@ -168,7 +179,8 @@ class QuizCasual extends Component {
               raised
               style={{
                 ...style.submit,
-                visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}>
+                visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}
+                onClick={() => this.submitQuiz()}>
               Submit
             </Button>
             <QuizProgress
@@ -178,6 +190,9 @@ class QuizCasual extends Component {
               onChange={n => this.changeCurrentQuestion(n)}
               />
           </div>
+        }
+        {
+          this.state.isSubmitted && <QuizResults />
         }
       </div>
     )
