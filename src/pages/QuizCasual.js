@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import _each from 'lodash/each'
 
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
@@ -172,23 +173,43 @@ class QuizCasual extends Component {
     })
     axios.post('/api/quiz', { questions })
     .then(response => {
-      console.log(response.data)
-      const questionsWithAnswers = this.state.quizQuestions.map(q => {
-        return {
-          ...q,
-          actualAnswer: response.data.results[q.id].correctAnswer
-        }
-      })
-      this.setState({
-        ...this.state,
-        isSubmitting: false,
-        quizQuestions: questionsWithAnswers,
-        quizResults: response.data.summary
-      })
+      this.animateResults(response.data)
     })
     .catch(error => {
       console.error(error)
     })
+  }
+
+  animateResults(data) {
+    this.setState({
+      ...this.state,
+      isSubmitting: false
+    })
+    const delay = 500
+    let questions = [ ...this.state.quizQuestions ]
+    let results = {
+      maxQuizScore: data.summary.maxQuizScore,
+      score: 0
+    }
+    _each(this.state.quizQuestions, (q, n) => {
+      setTimeout(() => {
+        questions[n] = {
+          ...questions[n],
+          actualAnswer: data.results[q.id].correctAnswer
+        }
+        results.score += data.results[q.id].score
+        this.setState({
+          ...this.state,
+          quizQuestions: [ ...questions ]
+        })
+      }, delay * (n + 1))
+    })
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        quizResults: { ...results }
+      })
+    }, delay * (this.state.quizQuestions.length + 1))
   }
 
   backHome() {

@@ -6,14 +6,17 @@ const mockAnswers = {
 }
 
 export default (req, res) => {
+  const correctScore = 30
+  const wrongScore = 0
+
   const success = () => {
     let score = 0
     const results = req.body.questions.reduce((acc, q) => {
-      score += q.answer === mockAnswers[q.id] ? 30 : -20
+      score += q.answer === mockAnswers[q.id] ? correctScore : wrongScore
       acc[q.id] = {
         correctAnswer: mockAnswers[q.id],
         isCorrect: q.answer === mockAnswers[q.id],
-        score: q.answer === mockAnswers[q.id] ? 30 : -20
+        score: q.answer === mockAnswers[q.id] ? correctScore : wrongScore
       }
       return acc
     }, {})
@@ -21,7 +24,7 @@ export default (req, res) => {
       success: true,
       results,
       summary: {
-        maxQuizScore: 30 * req.body.questions.length,
+        maxQuizScore: correctScore * req.body.questions.length,
         score
       }
     })
