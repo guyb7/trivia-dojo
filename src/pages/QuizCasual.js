@@ -47,7 +47,7 @@ const style = {
     flexGrow: 1
   },
   submit: {
-    backgroundColor: Colors.green.default,
+    backgroundColor: Colors.title.default,
     color: Colors.white,
     marginTop: 20,
     marginBottom: 20
@@ -191,6 +191,13 @@ class QuizCasual extends Component {
     })
   }
 
+  backHome() {
+    //TODO prevent multiple clicks during delay
+    setTimeout(() => {
+      this.props.history.push('/')
+    }, 400)
+  }
+
   render() {
     const category = this.state.category
     return (
@@ -229,7 +236,8 @@ class QuizCasual extends Component {
           this.state.isSubmitted && !this.state.isSubmitting &&
           <Button
             raised
-            style={style.submit}>
+            style={style.submit}
+            onClick={() => this.backHome()}>
             Continue
           </Button>
         }
@@ -240,7 +248,12 @@ class QuizCasual extends Component {
             style={{
               ...style.submit,
               visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}
-              onClick={() => this.submitQuiz()}>
+              onClick={() => {
+                //TODO prevent multiple clicks during delay
+                setTimeout(() => {
+                  this.submitQuiz()
+                }, 400)
+              }}>
             Submit
           </Button>
         }
