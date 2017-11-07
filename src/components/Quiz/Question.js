@@ -43,7 +43,7 @@ class Question extends Component {
             <h2 style={style.questionText}>{question.question}</h2>
             <div>
               {
-                question.options.map(option => {
+                question.options.map((option, n) => {
                   let optionStatus
                   if (this.props.readOnly) {
                     if (question.actualAnswer === option) {
@@ -67,6 +67,7 @@ class Question extends Component {
                       status={optionStatus}
                       onClick={() => this.props.onAnswer(question.id, option)}
                       disabled={this.props.readOnly}
+                      number={n+1}
                       />
                   )
                 })
