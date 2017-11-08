@@ -14,7 +14,8 @@ const style = {
     justifyContent: 'space-around',
     alignItems: 'center',
     height: '100%',
-    width: '100%'
+    width: '100%',
+    position: 'relative'
   },
   icon: {
     height: 40,
@@ -24,6 +25,15 @@ const style = {
     color: Colors.ink.default,
     fontSize: 14,
     fontWeight: 300
+  },
+  badgeNew: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: Colors.purple.default,
+    color: Colors.white,
+    padding: 5,
+    fontSize: 11
   }
 }
 
@@ -43,6 +53,10 @@ class CategoryGridItem extends Component {
           <div style={style.title}>
             {this.props.title}
           </div>
+          {
+            this.props.isNew &&
+            <div style={style.badgeNew}>New</div>
+          }
         </ButtonBase>
       </div>
     );

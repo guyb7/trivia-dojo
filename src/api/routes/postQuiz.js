@@ -26,6 +26,26 @@ export default (req, res) => {
       summary: {
         maxQuizScore: correctScore * req.body.questions.length,
         score
+      },
+      profileChanges: {
+        xp: score,
+        achievements: [
+          {
+            image: 'MusicNote',
+            name: 'Music Master'
+          }
+        ],
+        newCategories: [
+          {
+            id: 'food',
+            title: 'Food',
+            icon: 'Food'
+          }, {
+            id: 'brands',
+            title: 'Brands',
+            icon: 'Label'
+          }
+        ]
       }
     })
   }

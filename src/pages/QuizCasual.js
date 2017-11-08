@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import _each from 'lodash/each'
+import _get from 'lodash/get'
 import _findIndex from 'lodash/findIndex'
+
+import { addCategories } from '../store/actions'
 
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
@@ -269,12 +272,18 @@ class QuizCasual extends Component {
       }
     })
     axios.post('/api/quiz', { questions })
-    .then(response => {
-      this.animateResults(response.data)
-    })
+    .then(res => this.handleSubmitResults(res))
     .catch(error => {
       console.error(error)
     })
+  }
+
+  handleSubmitResults(response) {
+    this.animateResults(response.data)
+    // addCategories
+    if (_get(response.data, 'profileChanges.newCategories')) {
+      this.props.addCategories(response.data.profileChanges.newCategories)
+    }
   }
 
   animateResults(data) {
@@ -395,8 +404,17 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addCategories: categories => {
+      dispatch(addCategories(categories))
+    }
+  }
+}
+
 const connectedQuizCasual = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(QuizCasual)
 
 export default connectedQuizCasual

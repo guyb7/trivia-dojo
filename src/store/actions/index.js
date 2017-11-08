@@ -15,3 +15,7 @@ export const setLevel = level => {
 }
 
 export const loadCategories = Categories.loadCategories
+
+export const addCategories = Categories.addCategories
+
+export const markCategoriesAsNotNew = Categories.markCategoriesAsNotNew

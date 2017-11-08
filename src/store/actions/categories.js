@@ -42,5 +42,18 @@ export default {
         }
       ]
     }
+  },
+
+  addCategories(categories) {
+    return {
+      type: 'ADD_CATEGORIES',
+      categories
+    }
+  },
+
+  markCategoriesAsNotNew() {
+    return {
+      type: 'MARK_CATEGORIES_AS_NOT_NEW'
+    }
   }
 }

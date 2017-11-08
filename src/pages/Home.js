@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import _times from 'lodash/times'
 
-import { loadCategories } from '../store/actions'
+import { loadCategories, markCategoriesAsNotNew } from '../store/actions'
 import CategoryGridItem from '../components/CategoryGridItem'
 import GameTypeNavigation from '../components/GameTypeNavigation'
 
@@ -30,7 +31,13 @@ const style = {
 
 class Home extends Component {
   componentDidMount() {
-    this.props.getCategories()
+    if (this.props.categories.length === 0) {
+      this.props.getCategories()
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.markCategoriesAsNotNew()
   }
 
   startCasualQuiz(category) {
@@ -50,10 +57,19 @@ class Home extends Component {
               style={style.categoriesItem}
               id={category.id}
               title={category.title}
+              isNew={!!category.isNew}
               icon={category.icon}
               onClick={category => this.startCasualQuiz(category)}
               />
           ))}
+          {
+            _times(3 - this.props.categories.length % 3, n => 
+              <div
+                key={'empty-' + n}
+                style={style.categoriesItem}>
+              </div>
+            )
+          }
         </div>
         <GameTypeNavigation style={style.bottomNavigation} />
       </div>
@@ -71,6 +87,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getCategories: () => {
       dispatch(loadCategories())
+    },
+    markCategoriesAsNotNew: () => {
+      dispatch(markCategoriesAsNotNew())
     }
   }
 }
