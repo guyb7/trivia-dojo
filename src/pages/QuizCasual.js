@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import _each from 'lodash/each'
+import _findIndex from 'lodash/findIndex'
 
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
@@ -11,6 +12,8 @@ import { CircularProgress } from 'material-ui/Progress'
 
 import Icon from '../components/Icon'
 import Colors from '../components/Colors'
+
+let keyHandler
 
 const style = {
   container: {
@@ -85,6 +88,44 @@ class QuizCasual extends Component {
       isLoading: true
     })
     this.getNewQuiz()
+    this.keydownListener = k => {
+      this.onKeyDown(k)
+    }
+    keyHandler = k => { this.onKeydown(k) }
+    document.body.addEventListener('keydown', keyHandler, false)
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', keyHandler ,false)
+  }
+
+  onKeydown(k) {
+    switch(k.code) {
+      case 'ArrowLeft':
+        if (this.state.currentQuestion > 0) {
+          this.changeCurrentQuestion(this.state.currentQuestion - 1)
+        }
+        break
+      case 'ArrowRight':
+        if (this.state.currentQuestion < this.state.quizQuestions.length - 1) {
+          this.changeCurrentQuestion(this.state.currentQuestion + 1)
+        }
+        break
+      case 'ArrowDown':
+        this.nextAnswer()
+        break
+      case 'ArrowUp':
+        this.prevAnswer()
+        break
+      case 'Enter':
+        if (this.state.isSubmitted) {
+          this.backHome(false)
+        } else {
+          this.submitQuiz()
+        }
+        break
+      default:
+    }
   }
 
   getNewQuiz() {
@@ -130,14 +171,50 @@ class QuizCasual extends Component {
   addAnswer(question, answer) {
     const current = this.state.quizQuestions[this.state.currentQuestion]
     if (current.id === question) {
-      current.chosenAnswer = answer
-      //TODO prevent multiple clicks during delay
-      setTimeout(() => {
-        this.goToNextUnanswered()
-      }, 400)
+      const newQuizQuestions = [...this.state.quizQuestions]
+      newQuizQuestions[this.state.currentQuestion].chosenAnswer = answer
+      this.setState({
+        ...this.state,
+        quizQuestions: newQuizQuestions
+      }, () => {
+        //TODO prevent multiple clicks during delay
+        setTimeout(() => {
+          this.goToNextUnanswered()
+        }, 400)
+      })
     } else {
       console.error('Answered not current question?', question)
     }
+  }
+
+  nextAnswer() {
+    const current = this.state.quizQuestions[this.state.currentQuestion]
+    const idx = _findIndex(current.options, o => o === current.chosenAnswer)
+    if (idx >= current.options.length - 1 ) {
+      return
+    }
+    const newQuizQuestions = [...this.state.quizQuestions]
+    newQuizQuestions[this.state.currentQuestion].chosenAnswer = current.options[idx + 1]
+    this.setState({
+      ...this.state,
+      quizQuestions: newQuizQuestions
+    })
+    this.checkForUnanswered()
+  }
+
+  prevAnswer() {
+    const current = this.state.quizQuestions[this.state.currentQuestion]
+    const idx = _findIndex(current.options, o => o === current.chosenAnswer)
+    if (idx < 1 ) {
+      return
+    }
+    const newQuizQuestions = [...this.state.quizQuestions]
+    newQuizQuestions[this.state.currentQuestion].chosenAnswer = current.options[idx - 1]
+    this.setState({
+      ...this.state,
+      quizQuestions: newQuizQuestions
+    })
+    this.checkForUnanswered()
   }
 
   goToNextUnanswered() {
@@ -157,7 +234,27 @@ class QuizCasual extends Component {
     })
   }
 
+  checkForUnanswered() {
+    const questions = this.state.quizQuestions
+    for (var i = 0; i < questions.length; i++) {
+      if (questions[i].chosenAnswer === null) {
+        this.setState({
+          ...this.state,
+          isAllAnswered: false
+        })
+        return
+      }
+    }
+    this.setState({
+      ...this.state,
+      isAllAnswered: true
+    })
+  }
+
   submitQuiz() {
+    if (this.state.isSubmitted || !this.state.isAllAnswered) {
+      return
+    }
     this.setState({
       ...this.state,
       isSubmitted: true,
@@ -212,11 +309,11 @@ class QuizCasual extends Component {
     }, delay * (this.state.quizQuestions.length + 1))
   }
 
-  backHome() {
+  backHome(delay = true) {
     //TODO prevent multiple clicks during delay
     setTimeout(() => {
       this.props.history.push('/')
-    }, 400)
+    }, delay ? 400 : 0)
   }
 
   render() {

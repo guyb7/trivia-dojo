@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import requestAnimationFrame from 'raf'
 
 import ease from 'ease-component'
 
@@ -30,7 +31,7 @@ class QuizResultsScore extends Component {
       ...this.state,
       startTime: Date.now()
     }, () => {
-      this.animationId = window.requestAnimationFrame(() => { this.animate() })
+      this.animationId = requestAnimationFrame(() => { this.animate() })
     })
   }
 
@@ -45,7 +46,7 @@ class QuizResultsScore extends Component {
       startTime: Date.now(),
       stop: false
     }, () => {
-      this.animationId = window.requestAnimationFrame(() => { this.animate() })
+      this.animationId = requestAnimationFrame(() => { this.animate() })
     })
   }
 
@@ -54,7 +55,7 @@ class QuizResultsScore extends Component {
       return
     }
 
-    this.animationId = window.requestAnimationFrame(() => { this.animate() })
+    this.animationId = requestAnimationFrame(() => { this.animate() })
     this.draw()
   }
 
