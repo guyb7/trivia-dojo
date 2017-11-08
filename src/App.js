@@ -1,13 +1,13 @@
-import React from 'react';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
+import React from 'react'
+import Route from 'react-router-dom/Route'
+import Switch from 'react-router-dom/Switch'
 import { Provider } from 'react-redux'
 
 import store from './store'
-import TopBar from './components/TopBar';
-import Home from './pages/Home';
-import QuizCasual from './pages/QuizCasual';
-import './App.css';
+import TopBar from './components/TopBar'
+import Home from './pages/Home'
+import QuizCasual from './pages/QuizCasual'
+import './App.css'
 
 const style = {
   container: {
@@ -25,6 +25,6 @@ const App = () => (
       </Switch>
     </div>
   </Provider>
-);
+)
 
-export default App;
+export default App

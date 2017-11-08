@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
-import { setLevel } from '../store/actions'
+import { setLevelXp, setUser } from '../store/actions'
 import { CircularProgress } from 'material-ui/Progress'
 
 import Colors from './Colors'
@@ -13,7 +14,7 @@ const style = {
     left: 0,
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     padding: 10,
     boxSizing: 'border-box'
@@ -36,11 +37,24 @@ const style = {
 }
 
 class TopBar extends Component {
+  componentDidMount() {
+    this.getProfile()
+  }
+
+  getProfile() {
+    axios.get('/api/profile')
+    .then(res => {
+      this.props.setUser(res.data)
+    })
+    .catch(error => {
+      console.error(error)
+    })
+  }
+
   render() {
     return (
       <div style={style.container}>
-        <div></div>
-        <div style={style.level} onClick={() => this.props.setPercentage()}>
+        <div style={style.level}>
           <div style={style.levelText}>{this.props.level.level}</div>
           <CircularProgress mode="determinate" value={this.props.level.percentage} style={style.levelProgress} />
         </div>
@@ -51,14 +65,20 @@ class TopBar extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    level: state.level
+    level: state.level,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setPercentage: () => {
-      dispatch(setLevel({ percentage: 50 }))
+    setUser(profile) {
+      dispatch(setUser({
+        id: profile.id,
+        loggedIn: profile.isLoggedIn,
+        name: profile.name
+      }))
+      dispatch(setLevelXp(profile.xp))
     }
   }
 }

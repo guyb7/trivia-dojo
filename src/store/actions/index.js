@@ -1,21 +1,11 @@
 import Categories from './categories'
+import Level from './level'
+import User from './user'
 
-export const setUser = user => {
-  return {
-    type: 'SET_USER',
-    ...user
-  }
-}
+export const setUser = User.setUser
 
-export const setLevel = level => {
-  return {
-    type: 'SET_LEVEL',
-    level
-  }
-}
+export const setLevelXp = Level.setLevelXp
 
 export const loadCategories = Categories.loadCategories
-
 export const addCategories = Categories.addCategories
-
 export const markCategoriesAsNotNew = Categories.markCategoriesAsNotNew
