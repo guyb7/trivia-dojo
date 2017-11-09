@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { CircularProgress } from 'material-ui/Progress'
+import Spinner from '../Spinner'
 import QuizResultsScore from './QuizResultsScore'
 
 const style = {
@@ -27,7 +27,7 @@ class QuizResults extends Component {
         {
           this.props.isSubmitting &&
           <div style={style.loadingContainer}>
-            <CircularProgress style={style.loading} />
+            <Spinner style={style.loading} />
           </div>
         }
         {

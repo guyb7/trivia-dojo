@@ -10,8 +10,8 @@ import { addCategories } from '../store/actions'
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
 import QuizResults from '../components/Quiz/QuizResults'
+import Spinner from '../components/Spinner'
 import Button from 'material-ui/Button'
-import { CircularProgress } from 'material-ui/Progress'
 
 import Icon from '../components/Icon'
 import Colors from '../components/Colors'
@@ -341,7 +341,7 @@ class QuizCasual extends Component {
         {
           !this.state.isSubmitted && this.state.isLoading &&
           <div style={style.loadingContainer}>
-            <CircularProgress style={style.loading} />
+            <Spinner style={style.loading} />
           </div>
         }
         {

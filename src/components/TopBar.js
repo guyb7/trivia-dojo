@@ -44,11 +44,19 @@ class TopBar extends Component {
   getProfile() {
     axios.get('/api/profile')
     .then(res => {
+      this.showApp()
       this.props.setUser(res.data)
     })
     .catch(error => {
       console.error(error)
     })
+  }
+
+  showApp() {
+    const spinner = document.getElementById('spinner-container')
+    const app = document.getElementById('root')
+    spinner.classList.add('hidden')
+    app.classList.remove('hidden')
   }
 
   render() {
