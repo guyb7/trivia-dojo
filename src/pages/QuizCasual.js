@@ -122,7 +122,9 @@ class QuizCasual extends Component {
         break
       case 'Enter':
         if (this.state.isSubmitted) {
-          this.backHome(false)
+          if (this.state.quizResults) {
+            this.backHome(false)
+          }
         } else {
           this.submitQuiz()
         }
@@ -360,7 +362,7 @@ class QuizCasual extends Component {
             />
         }
         {
-          this.state.isSubmitted && !this.state.isSubmitting &&
+          this.state.isSubmitted && !this.state.isSubmitting && this.state.quizResults &&
           <Button
             raised
             style={style.submit}
