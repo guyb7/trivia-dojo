@@ -11,6 +11,7 @@ import Palette from 'material-ui-icons/Palette'
 import Public from 'material-ui-icons/Public'
 import Restaurant from 'material-ui-icons/Restaurant'
 import SdStorage from 'material-ui-icons/SdStorage'
+import Security from 'material-ui-icons/Security'
 import Star from 'material-ui-icons/Star'
 
 class Icon extends Component {
@@ -46,6 +47,9 @@ class Icon extends Component {
         break;
       case 'Science':
         IconComponent = Colorize
+        break;
+      case 'Shield':
+        IconComponent = Security
         break;
       case 'Star':
         IconComponent = Star

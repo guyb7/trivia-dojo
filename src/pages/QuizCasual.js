@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import _each from 'lodash/each'
 import _get from 'lodash/get'
+import _has from 'lodash/has'
 import _once from 'lodash/once'
 import _findIndex from 'lodash/findIndex'
 
-import { addCategories } from '../store/actions'
+import { addCategories, addNotification } from '../store/actions'
 
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
@@ -318,6 +319,13 @@ class QuizCasual extends Component {
         quizResults: { ...results }
       })
     }, delay * (this.state.quizQuestions.length + 1))
+    if (_has(data, 'profileChanges.achievements')) {
+      _each(data.profileChanges.achievements, achievement => {
+        setTimeout(() => {
+          this.props.notifyAchievement(achievement)
+        }, delay * (this.state.quizQuestions.length + 1) + 3000)
+      })
+    }
   }
 
   backHome(delay = true) {
@@ -408,6 +416,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addCategories: categories => {
       dispatch(addCategories(categories))
+    },
+    notifyAchievement(achievement) {
+      dispatch(addNotification({
+        id: 'achievement-' + achievement.name,
+        text: achievement.name,
+        autoHideDuration: 3000,
+        icon: achievement.image
+      }))
     }
   }
 }

@@ -2,11 +2,13 @@ import { combineReducers, createStore } from 'redux'
 
 import categories from './reducers/categories'
 import level from './reducers/level'
+import notifications from './reducers/notifications'
 import user from './reducers/user'
 
 const appReducers = combineReducers({
   categories,
   level,
+  notifications,
   user
 })
 

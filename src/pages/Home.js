@@ -85,10 +85,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getCategories: () => {
+    getCategories() {
       dispatch(loadCategories())
     },
-    markCategoriesAsNotNew: () => {
+    markCategoriesAsNotNew() {
       dispatch(markCategoriesAsNotNew())
     }
   }

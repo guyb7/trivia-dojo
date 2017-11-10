@@ -13,10 +13,10 @@ export default {
     default: '#212B35'
   },
   title: {
-    Light: '#B3B5CB',
+    light: '#B3B5CB',
     default: '#43467F',
-    Dark: '#1C2260',
-    Darker: '#00044C'
+    dark: '#1C2260',
+    darker: '#00044C'
   },
   purple: {
     lighter: '#F6F0FD',
