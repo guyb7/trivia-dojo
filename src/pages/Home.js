@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import _once from 'lodash/once'
 import _times from 'lodash/times'
 
 import { loadCategories, markCategoriesAsNotNew } from '../store/actions'
@@ -41,7 +42,6 @@ class Home extends Component {
   }
 
   startCasualQuiz(category) {
-    //TODO prevent multiple clicks during delay
     setTimeout(() => {
       this.props.history.push('/casual/' + category.id)
     }, 400)
@@ -59,7 +59,7 @@ class Home extends Component {
               title={category.title}
               isNew={!!category.isNew}
               icon={category.icon}
-              onClick={category => this.startCasualQuiz(category)}
+              onClick={_once(category => this.startCasualQuiz(category))}
               />
           ))}
           {

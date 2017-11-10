@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import _each from 'lodash/each'
 import _get from 'lodash/get'
+import _once from 'lodash/once'
 import _findIndex from 'lodash/findIndex'
 
 import { addCategories } from '../store/actions'
@@ -182,7 +183,6 @@ class QuizCasual extends Component {
         ...this.state,
         quizQuestions: newQuizQuestions
       }, () => {
-        //TODO prevent multiple clicks during delay
         setTimeout(() => {
           this.goToNextUnanswered()
         }, 400)
@@ -321,7 +321,6 @@ class QuizCasual extends Component {
   }
 
   backHome(delay = true) {
-    //TODO prevent multiple clicks during delay
     setTimeout(() => {
       this.props.history.push('/')
     }, delay ? 400 : 0)
@@ -349,7 +348,7 @@ class QuizCasual extends Component {
           <Question
             style={style.question}
             question={this.state.quizQuestions[this.state.currentQuestion]}
-            onAnswer={(q, a) => this.addAnswer(q, a)}
+            onAnswer={_once((q, a) => this.addAnswer(q, a))}
             readOnly={this.state.isSubmitted}
             />
         }
@@ -366,7 +365,7 @@ class QuizCasual extends Component {
           <Button
             raised
             style={style.submit}
-            onClick={() => this.backHome()}>
+            onClick={_once(() => this.backHome())}>
             Continue
           </Button>
         }
@@ -378,7 +377,6 @@ class QuizCasual extends Component {
               ...style.submit,
               visibility: this.state.isAllAnswered ? 'visible' : 'hidden' }}
               onClick={() => {
-                //TODO prevent multiple clicks during delay
                 setTimeout(() => {
                   this.submitQuiz()
                 }, 400)
