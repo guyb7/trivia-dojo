@@ -18,7 +18,7 @@ export default {
         }, {
           id: 'sports',
           title: 'Sports',
-          icon: 'Golf'
+          icon: 'Sport'
         }, {
           id: 'movies',
           title: 'Movies',

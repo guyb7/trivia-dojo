@@ -4041,6 +4041,10 @@ math-expression-evaluator@^1.2.14:
   version "1.2.16"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.16.tgz#b357fa1ca9faefb8e48d10c14ef2bcb2d9f0a7c9"
 
+mdi-material-ui@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/mdi-material-ui/-/mdi-material-ui-2.0.1.tgz#4af4e59aacf414f09e0e8cadfac93c64f502bcbb"
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"

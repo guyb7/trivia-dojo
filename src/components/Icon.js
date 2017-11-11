@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 
 import AccountBalance from 'material-ui-icons/AccountBalance'
-import Colorize from 'material-ui-icons/Colorize'
-import GolfCourse from 'material-ui-icons/GolfCourse'
+import FlaskOutline from 'mdi-material-ui/FlaskOutline'
+import Food from 'mdi-material-ui/Food'
+import Football from 'mdi-material-ui/Football'
 import LocalMovies from 'material-ui-icons/LocalMovies'
 import LocalOffer from 'material-ui-icons/LocalOffer'
 import MusicNote from 'material-ui-icons/MusicNote'
 import NotFound from 'material-ui-icons/HelpOutline'
 import Palette from 'material-ui-icons/Palette'
 import Public from 'material-ui-icons/Public'
-import Restaurant from 'material-ui-icons/Restaurant'
 import SdStorage from 'material-ui-icons/SdStorage'
 import Security from 'material-ui-icons/Security'
 import Star from 'material-ui-icons/Star'
@@ -22,10 +22,7 @@ class Icon extends Component {
         IconComponent = AccountBalance
         break;
       case 'Food':
-        IconComponent = Restaurant
-        break;
-      case 'Golf':
-        IconComponent = GolfCourse
+        IconComponent = Food
         break;
       case 'Globe':
         IconComponent = Public
@@ -46,10 +43,13 @@ class Icon extends Component {
         IconComponent = SdStorage
         break;
       case 'Science':
-        IconComponent = Colorize
+        IconComponent = FlaskOutline
         break;
       case 'Shield':
         IconComponent = Security
+        break;
+      case 'Sport':
+        IconComponent = Football
         break;
       case 'Star':
         IconComponent = Star
