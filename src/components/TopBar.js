@@ -32,7 +32,15 @@ const style = {
     top: 11
   },
   levelProgress: {
-    color: Colors.ink.lightest
+    position: 'absolute',
+    color: Colors.ink.lightest,
+    top: 0,
+    right: 0
+  },
+  levelProgressBg: {
+    color: Colors.ink.lightest,
+    thickness: 1,
+    opacity: 0.5
   }
 }
 
@@ -65,6 +73,7 @@ class TopBar extends Component {
         <div style={style.level}>
           <div style={style.levelText}>{this.props.level.level}</div>
           <CircularProgress mode="determinate" value={this.props.level.percentage} style={style.levelProgress} />
+          <CircularProgress mode="determinate" value={100} style={style.levelProgressBg} thickness={style.levelProgressBg.thickness} />
         </div>
       </div>
     )
