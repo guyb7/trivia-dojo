@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-import { setLevelXp, setUser } from '../store/actions'
+import { openUserDrawer, setLevelXp, setUser } from '../store/actions'
 import { CircularProgress } from 'material-ui/Progress'
 
 import Colors from './Colors'
@@ -70,7 +70,7 @@ class TopBar extends Component {
   render() {
     return (
       <div style={style.container}>
-        <div style={style.level}>
+        <div style={style.level} onClick={() => this.props.openUserDrawer()}>
           <div style={style.levelText}>{this.props.level.level}</div>
           <CircularProgress mode="determinate" value={this.props.level.percentage} style={style.levelProgress} />
           <CircularProgress mode="determinate" value={100} style={style.levelProgressBg} thickness={style.levelProgressBg.thickness} />
@@ -96,6 +96,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         name: profile.name
       }))
       dispatch(setLevelXp(profile.xp))
+    },
+    openUserDrawer() {
+      dispatch(openUserDrawer())
     }
   }
 }

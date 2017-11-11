@@ -7,6 +7,7 @@ import store from './store'
 import TopBar from './components/TopBar'
 import Notifications from './components/Notifications'
 import Home from './pages/Home'
+import Profile from './pages/Profile'
 import QuizCasual from './pages/QuizCasual'
 import './App.css'
 
@@ -20,6 +21,7 @@ const App = () => (
   <Provider store={store}>
     <div style={style.container}>
       <TopBar />
+      <Profile />
       <Notifications />
       <Switch>
         <Route exact path="/" component={Home} />

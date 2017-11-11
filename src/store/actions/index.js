@@ -4,6 +4,8 @@ import Notifications from './notifications'
 import User from './user'
 
 export const setUser = User.setUser
+export const openUserDrawer = User.openDrawer
+export const closeUserDrawer = User.closeDrawer
 
 export const setLevelXp = Level.setLevelXp
 

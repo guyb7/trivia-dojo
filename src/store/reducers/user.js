@@ -1,7 +1,8 @@
 const defaultState = {
   id: null,
   loggedIn: false,
-  name: 'Guest'
+  name: 'Guest',
+  isDrawerOpen: false
 }
 
 const user = (state = defaultState, action) => {
@@ -10,6 +11,16 @@ const user = (state = defaultState, action) => {
       return {
         ...state,
         ...action
+      }
+    case 'OPEN_USER_DRAWER':
+      return {
+        ...state,
+        isDrawerOpen: true
+      }
+    case 'CLOSE_USER_DRAWER':
+      return {
+        ...state,
+        isDrawerOpen: false
       }
     default:
       return state
