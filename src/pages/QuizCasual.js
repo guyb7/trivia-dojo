@@ -298,7 +298,8 @@ class QuizCasual extends Component {
     let questions = [ ...this.state.quizQuestions ]
     let results = {
       maxQuizScore: data.summary.maxQuizScore,
-      score: 0
+      score: 0,
+      profileChanges: data.profileChanges
     }
     _each(this.state.quizQuestions, (q, n) => {
       setTimeout(() => {
@@ -319,13 +320,13 @@ class QuizCasual extends Component {
         quizResults: { ...results }
       })
     }, delay * (this.state.quizQuestions.length + 1))
-    if (_has(data, 'profileChanges.achievements')) {
-      _each(data.profileChanges.achievements, achievement => {
-        setTimeout(() => {
-          this.props.notifyAchievement(achievement)
-        }, delay * (this.state.quizQuestions.length + 1) + 3000)
-      })
-    }
+    // if (_has(data, 'profileChanges.achievements')) {
+    //   _each(data.profileChanges.achievements, achievement => {
+    //     setTimeout(() => {
+    //       this.props.notifyAchievement(achievement)
+    //     }, delay * (this.state.quizQuestions.length + 1) + 3000)
+    //   })
+    // }
   }
 
   backHome(delay = true) {
