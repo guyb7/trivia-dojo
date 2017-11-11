@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import _each from 'lodash/each'
 import _get from 'lodash/get'
-import _has from 'lodash/has'
 import _once from 'lodash/once'
 import _findIndex from 'lodash/findIndex'
 

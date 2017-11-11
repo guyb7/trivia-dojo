@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Spinner from '../Spinner'
+import QuizResultsChanges from './QuizResultsChanges'
 import QuizResultsScore from './QuizResultsScore'
 
 const style = {
@@ -16,11 +17,28 @@ const style = {
     width: '100%'
   },
   resultsContainer: {
-    height: 300
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1
+  },
+  score: {
+    height: 200
+  },
+  changes: {
+    flexGrow: 1
   }
 }
 
+const SCORE_ANIMATION_DURATION = 2500
+
 class QuizResults extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      changesVisible: false
+    }
+  }
+
   render() {
     return (
       <div style={{ ...style.container, ...this.props.style }}>
@@ -36,6 +54,13 @@ class QuizResults extends Component {
             <QuizResultsScore
               value={this.props.results.score || 0}
               max={this.props.results.maxQuizScore}
+              duration={SCORE_ANIMATION_DURATION}
+              style={style.score}
+              />
+            <QuizResultsChanges
+              changes={this.props.results.profileChanges}
+              duration={SCORE_ANIMATION_DURATION}
+              style={style.changes}
               />
           </div>
         }

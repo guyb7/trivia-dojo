@@ -8,7 +8,7 @@ import Icon from './Icon'
 
 const style = {
   container: {
-    backgroundColor: Colors.title.default,
+    backgroundColor: Colors.ink.light,
     color: Colors.white,
     padding: 10,
     display: 'flex',
