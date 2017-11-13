@@ -1,12 +1,9 @@
+import getProfile from '../controllers/User/getProfile'
+
 export default (req, res) => {
   const success = () => {
-    res.json({
-      success: true,
-      name: 'Rick',
-      id: '1234-1234-1234-1234',
-      isLoggedIn: true,
-      xp: 210
-    })
+    const profile = getProfile(req)
+    res.json(profile)
   }
   setTimeout(success, 250)
 }
