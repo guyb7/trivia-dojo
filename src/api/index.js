@@ -1,7 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import mountRoutes from './api/routes/'
+import mountRoutes from './routes/'
 
 const app = express()
 
