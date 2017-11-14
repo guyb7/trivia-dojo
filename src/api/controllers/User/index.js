@@ -1,5 +1,7 @@
 import getProfile from './getProfile'
+import registerIfNotLoggedIn from './registerIfNotLoggedIn'
 
 export {
-  getProfile
+  getProfile,
+  registerIfNotLoggedIn
 }

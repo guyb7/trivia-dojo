@@ -1,4 +1,4 @@
-const getProfile = req => {
+export default req => {
   return {
     success: true,
     id: '1234-1234-1234-1234',
@@ -6,8 +6,4 @@ const getProfile = req => {
     name: 'Rick',
     xp: 270
   }
-}
-
-export {
-  getProfile
 }

@@ -11,8 +11,8 @@ import uuid from 'uuid/v4'
 // }) : new session.MemoryStore()
 
 const {
-  COOKIE_SECRET = 'session',
-  REDIS_SESSION_KEY = 'defaultsecret',
+  COOKIE_SECRET = 'defaultsecret',
+  REDIS_SESSION_KEY = 'session',
   COOKIE_DAYS_TOEXPIRE = 90
 } = process.env
 
