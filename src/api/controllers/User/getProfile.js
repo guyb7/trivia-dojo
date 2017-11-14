@@ -1,9 +1,13 @@
-export default req => {
+const getProfile = req => {
   return {
     success: true,
-    name: 'Rick',
     id: '1234-1234-1234-1234',
-    isLoggedIn: true,
+    role: 'user', // guest, user, editor, admin
+    name: 'Rick',
     xp: 270
   }
+}
+
+export {
+  getProfile
 }

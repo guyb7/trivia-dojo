@@ -1,4 +1,4 @@
-import getProfile from '../controllers/User/getProfile'
+import { getProfile } from '../controllers/User/'
 
 export default (req, res) => {
   const success = () => {

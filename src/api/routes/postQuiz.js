@@ -1,4 +1,4 @@
-import submitQuiz from '../controllers/Quiz/submit'
+import { submitQuiz } from '../controllers/Quiz/'
 
 export default (req, res) => {
   const success = () => {

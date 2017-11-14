@@ -1,8 +1,8 @@
-import getByCategory from '../controllers/Quiz/getByCategory'
+import { getQuizByCategory } from '../controllers/Quiz/'
 
 export default (req, res) => {
   const success = () => {
-    const quiz = getByCategory(req.params.category)
+    const quiz = getQuizByCategory(req.params.category)
     res.json(quiz)
   }
   setTimeout(success, 800)
