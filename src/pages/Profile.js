@@ -6,6 +6,8 @@ import Icon from '../components/Icon'
 import IconButton from 'material-ui/IconButton'
 
 import { closeUserDrawer } from '../store/actions'
+import LevelProgress from '../components/LevelProgress'
+import Colors from '../components/Colors'
 
 const style = {
   container: {
@@ -15,14 +17,32 @@ const style = {
   page: {
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: 300,
-    marginRight: 'auto',
-    marginLeft: 'auto'
+    padding: 10
   },
   close: {
     position: 'absolute',
     top: 10,
     right: 10
+  },
+  sectionHeader: {
+    color: Colors.ink.light,
+    fontSize: 16,
+    fontWeight: 300,
+    marginTop: 30,
+    marginBottom: 5,
+    marginLeft: 10
+  },
+  sectionRow: {
+    display: 'flex'
+  },
+  sectionTile: {
+    flexGrow: 1,
+    backgroundColor: Colors.sky.light,
+    margin: 5,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }
 
@@ -37,10 +57,39 @@ class Profile extends Component {
     return (
       <Drawer open={this.props.user.isDrawerOpen} anchor="right">
         <div style={style.container}>
-          <IconButton style={style.close} onClick={() => this.props.closeDrawer()}>
-            <Icon type='Close' />
-          </IconButton>
-          <div style={style.page}>
+        <IconButton style={style.close} onClick={() => this.props.closeDrawer()}>
+        <Icon type='Close' />
+        </IconButton>
+        <div style={style.page}>
+          <h1 style={style.sectionHeader}>Profile</h1>
+          <div style={style.sectionRow}>
+              <div style={style.sectionTile}>
+                <LevelProgress
+                  level={this.props.level.level}
+                  percentage={this.props.level.percentage}
+                  />
+              </div>
+              <div style={style.sectionTile}>
+                <p>User Name</p>
+                <p>Email</p>
+                <p>Logout</p>
+              </div>
+            </div>
+            <h1 style={style.sectionHeader}>Achievements</h1>
+            <div style={style.sectionWrap}>
+              <div style={style.sectionTile}>
+                Aaa
+              </div>
+            </div>
+            <h1 style={style.sectionHeader}>Statistics</h1>
+            <div style={style.sectionRow}>
+              <div style={style.sectionTile}>
+                123
+              </div>
+              <div style={style.sectionTile}>
+                123
+              </div>
+            </div>
           </div>
         </div>
       </Drawer>

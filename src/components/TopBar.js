@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 import { openUserDrawer, setLevelXp, setUser } from '../store/actions'
-import { CircularProgress } from 'material-ui/Progress'
-
-import Colors from './Colors'
+import LevelProgress from './LevelProgress'
 
 const style = {
   container: {
@@ -18,29 +16,6 @@ const style = {
     alignItems: 'center',
     padding: 10,
     boxSizing: 'border-box'
-  },
-  level: {
-    position: 'relative'
-  },
-  levelText: {
-    color: Colors.ink.lightest,
-    position: 'absolute',
-    width: 20,
-    textAlign: 'center',
-    marginLeft: -10,
-    left: '50%',
-    top: 11
-  },
-  levelProgress: {
-    position: 'absolute',
-    color: Colors.ink.lightest,
-    top: 0,
-    right: 0
-  },
-  levelProgressBg: {
-    color: Colors.ink.lightest,
-    thickness: 1,
-    opacity: 0.5
   }
 }
 
@@ -70,11 +45,11 @@ class TopBar extends Component {
   render() {
     return (
       <div style={style.container}>
-        <div style={style.level} onClick={() => this.props.openUserDrawer()}>
-          <div style={style.levelText}>{this.props.level.level}</div>
-          <CircularProgress mode="determinate" value={this.props.level.percentage} style={style.levelProgress} />
-          <CircularProgress mode="determinate" value={100} style={style.levelProgressBg} thickness={style.levelProgressBg.thickness} />
-        </div>
+        <LevelProgress
+          onClick={() => this.props.openUserDrawer()}
+          level={this.props.level.level}
+          percentage={this.props.level.percentage}
+          />
       </div>
     )
   }
