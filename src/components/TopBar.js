@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-import { openUserDrawer, setLevelXp, setUser } from '../store/actions'
+import { openUserDrawer, setCategories, setLevelXp, setUser } from '../store/actions'
 import LevelProgress from './LevelProgress'
 
 const style = {
@@ -67,10 +67,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setUser(profile) {
       dispatch(setUser({
         id: profile.id,
-        loggedIn: profile.isLoggedIn,
-        name: profile.name
+        loggedIn: profile.user.role !== 'guest',
+        name: profile.user.name
       }))
-      dispatch(setLevelXp(profile.xp))
+      dispatch(setLevelXp(profile.progress.xp))
+      dispatch(setCategories(profile.categories))
     },
     openUserDrawer() {
       dispatch(openUserDrawer())

@@ -9,7 +9,7 @@ export const closeUserDrawer = User.closeDrawer
 
 export const setLevelXp = Level.setLevelXp
 
-export const loadCategories = Categories.loadCategories
+export const setCategories = Categories.setCategories
 export const addCategories = Categories.addCategories
 export const markCategoriesAsNotNew = Categories.markCategoriesAsNotNew
 

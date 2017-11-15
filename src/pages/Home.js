@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import _once from 'lodash/once'
 import _times from 'lodash/times'
 
-import { loadCategories, markCategoriesAsNotNew } from '../store/actions'
+import { markCategoriesAsNotNew } from '../store/actions'
 import CategoryGridItem from '../components/CategoryGridItem'
 import GameTypeNavigation from '../components/GameTypeNavigation'
 
@@ -31,12 +31,6 @@ const style = {
 }
 
 class Home extends Component {
-  componentDidMount() {
-    if (this.props.categories.length === 0) {
-      this.props.getCategories()
-    }
-  }
-
   componentWillUnmount() {
     this.props.markCategoriesAsNotNew()
   }
@@ -85,9 +79,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getCategories() {
-      dispatch(loadCategories())
-    },
     markCategoriesAsNotNew() {
       dispatch(markCategoriesAsNotNew())
     }
