@@ -14,7 +14,7 @@ passport.use(new LocalStrategy(
     if (username === 'user' && password === 'pass') {
       return done(null, mockDbUsers[123])
     } else {
-      return done(null, false, { message: 'Incorrect username.' })
+      return done(null, false)
     }
   }
 ))

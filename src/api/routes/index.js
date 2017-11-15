@@ -11,7 +11,7 @@ import notFound from './notFound'
 export default app => {
   app.post('/user/login', authPassword)
 
-  app.use('/api/*', registerIfNotLoggedIn)
+  app.use ('/api/*', registerIfNotLoggedIn)
   app.get ('/api/status', getStatus)
   app.get ('/api/profile', getProfile)
   app.get ('/api/quiz/:category', getQuiz)
