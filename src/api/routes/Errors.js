@@ -7,38 +7,35 @@ const serverError = (err, req, res, next) => {
 }
 
 const errors = {
-  'no-such-route': {
-    code: 404,
+  'unhandled-error': {
     id: 10,
+    code: 500,
+    message: 'Server side error'
+  },
+  'no-such-route': {
+    id: 11,
+    code: 404,
     message: 'No such route'
   },
   'user-not-found': {
+    id: 12,
     code: 400,
-    id: 11,
     message: 'No such user'
   }
 }
 
 const parseError = (res, err) => {
-  if (errors[err.message]) {
-    res.status(errors[err.message].code).json({
-      success: false,
-      error: {
-        id: errors[err.message].id,
-        message: errors[err.message].message
-      }
-    })
-  } else {
-    console.error('Unhandled error')
+  const error = errors[err.message] || errors['unhandled-error']
+  if (error.code >= 500) {
     console.error(err.stack)
-    res.status(500).json({
-      success: false,
-      error: {
-        id: 10,
-        message: 'Server side error'
-      }
-    })
   }
+  res.status(error.code).json({
+    success: false,
+    error: {
+      id: error.id,
+      message: error.message
+    }
+  })
 }
 
 export {
