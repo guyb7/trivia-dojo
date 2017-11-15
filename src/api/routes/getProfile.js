@@ -1,4 +1,5 @@
 import { getProfile } from '../controllers/User/'
+import { parseError } from './Errors'
 
 export default (req, res) => {
   const success = async () => {
@@ -6,7 +7,7 @@ export default (req, res) => {
       const profile = await getProfile(req)
       res.json(profile)
     } catch (e) {
-      res.status(500).json({ error: e.message })
+      parseError(res, e)
     }
   }
   setTimeout(success, 250)
