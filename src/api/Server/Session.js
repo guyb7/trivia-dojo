@@ -26,6 +26,8 @@ const sessionConfig = {
   genid: req => uuid()
 }
 
+console.log(sessionConfig)
+
 export default app => {
   app.use(session(sessionConfig))
 }
