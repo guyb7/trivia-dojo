@@ -11,21 +11,19 @@ import uuid from 'uuid/v4'
 // }) : new session.MemoryStore()
 
 const {
-  COOKIE_SECRET = 'defaultsecret',
-  REDIS_SESSION_KEY = 'session',
-  COOKIE_DAYS_TOEXPIRE = 90
+  RAZZLE_COOKIE_SECRET = 'defaultsecret',
+  RAZZLE_SESSION_KEY = 'session',
+  RAZZLE_COOKIE_DAYS_TOEXPIRE = 90
 } = process.env
 
 const sessionConfig = {
   // store,
-  name: REDIS_SESSION_KEY,
-  secret: COOKIE_SECRET,
-  cookie: { maxAge: Number(COOKIE_DAYS_TOEXPIRE) * 24 * 60 * 60 * 1000 },
+  name: RAZZLE_SESSION_KEY,
+  secret: RAZZLE_COOKIE_SECRET,
+  cookie: { maxAge: Number(RAZZLE_COOKIE_DAYS_TOEXPIRE) * 24 * 60 * 60 * 1000 },
   resave: true,
   saveUninitialized: true,
-  genid: req => {
-    return uuid()
-  }
+  genid: req => uuid()
 }
 
 export default app => {
