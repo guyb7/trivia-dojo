@@ -21,6 +21,11 @@ const errors = {
     id: 12,
     code: 400,
     message: 'No such user'
+  },
+  'register-user-failed': {
+    id: 13,
+    code: 500,
+    message: 'Failed to register the user'
   }
 }
 
