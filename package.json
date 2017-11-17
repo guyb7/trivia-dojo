@@ -16,6 +16,7 @@
     "ease-component": "^1.0.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.19",
     "material-ui-icons": "^1.0.0-beta.17",
     "mdi-material-ui": "^2.0.1",

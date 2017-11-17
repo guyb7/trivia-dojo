@@ -1,44 +1,19 @@
-export default category => {
+import { query } from '../../Server/DB'
+import _sampleSize from 'lodash/sampleSize'
+import _shuffle from 'lodash/shuffle'
+
+const QUESTIONS_PER_QUIZ = 10
+
+export default async category => {
+  const res = await query('SELECT * FROM questions WHERE category=$1', [category])
+  const questions = _shuffle(_sampleSize(res.rows, QUESTIONS_PER_QUIZ))
+  const shuffledAnswers = questions.map(q => ({
+    id: q.id,
+    question: q.question,
+    options: _shuffle(q.options)
+  }))
   return {
-    category: category,
-    questions: [
-      {
-        id: 'ab1234',
-        question: 'What is the name of Muse’s first album?',
-        options: [
-          'Absolution',
-          'Showbiz',
-          'The 2nd Law',
-          'Black Holes and Revelations'
-        ]
-      }, {
-        id: 'ab1235',
-        question: 'Who released the album Master Of Puppets?',
-        options: [
-          'Iron Maiden',
-          'Metallica',
-          'Megadeth',
-          'Black Sabbath'
-        ]
-      }, {
-        id: 'ab1236',
-        question: 'What is the best-selling album of all time? (most sold copies)',
-        options: [
-          'Thriller, Michael Jackson',
-          'Hotel California, Eagles',
-          'Abbey Road, The Beatles',
-          'The Wall, Pink Floyd'
-        ]
-      }, {
-        id: 'ab1237',
-        question: 'Who wrote the song Brothers in Arms?',
-        options: [
-          'Deep Purple',
-          'Pink Floyd',
-          'The Who',
-          'Dire Straits'
-        ]
-      }
-    ]
+    category,
+    questions: shuffledAnswers
   }
 }
