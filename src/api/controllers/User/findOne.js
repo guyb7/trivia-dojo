@@ -1,18 +1,10 @@
-import Promise from 'bluebird'
-
-const mockDbFetch = userId => new Promise((resolve, reject) => {
-  resolve({
-    id: 1234,
-    name: 'Guest',
-    role: 'guest'
-  })
-})
+import { query } from '../../Server/DB'
 
 export default async userId => {
-  try {
-    const user = mockDbFetch(userId)
-    return user
-  } catch (e) {
+  const users = await query('SELECT * FROM users WHERE id=$1', [userId])
+  if (users.rowCount !== 1) {
     throw new Error('user-not-found')
   }
+  const user = users.rows[0]
+  return user
 }

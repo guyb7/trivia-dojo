@@ -5,6 +5,14 @@ import { getUserProgress } from '../Progress/'
 import { getUserCategories } from '../Categories/'
 import { getUserSettings } from '../Settings/'
 
+const pickUserFields = user => {
+  return {
+    id: user.id,
+    name: user.name,
+    role: user.role
+  }
+}
+
 export default async req => {
   const userId = req.session.user.id
   const results = await Promise.props({
@@ -16,7 +24,7 @@ export default async req => {
   return {
     success: true,
     id: results.user.id,
-    user: results.user,
+    user: pickUserFields(results.user),
     progress: results.progress,
     categories: results.categories,
     settings: results.settings
