@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton'
 import { closeUserDrawer } from '../store/actions'
 import LevelProgress from '../components/LevelProgress'
 import Colors from '../components/Colors'
+import Level from '../shared/Level'
 
 const style = {
   container: {
@@ -43,6 +44,9 @@ const style = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  xp: {
+    color: Colors.ink.light,
   }
 }
 
@@ -51,6 +55,13 @@ class Profile extends Component {
     super(props)
     this.state = {
     }
+  }
+
+  getXpRangeText() {
+    const { level, xp } = this.props.level
+    const currentLevelStartXp = Level.getXpStart(level)
+    const nextLevelStartXp = Level.getXpStart(level + 1)
+    return (xp - currentLevelStartXp) + '/' + (nextLevelStartXp - currentLevelStartXp)
   }
 
   render() {
@@ -65,9 +76,13 @@ class Profile extends Component {
           <div style={style.sectionRow}>
               <div style={style.sectionTile}>
                 <LevelProgress
+                  size='big'
                   level={this.props.level.level}
                   percentage={this.props.level.percentage}
                   />
+                <div style={style.xp}>
+                  {this.getXpRangeText()}
+                </div>
               </div>
               <div style={style.sectionTile}>
                 <p>User Name</p>

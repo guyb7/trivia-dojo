@@ -9,6 +9,9 @@ const style = {
     position: 'relative',
     width: 40
   },
+  containerBig: {
+    width: 100
+  },
   text: {
     color: Colors.ink.lightest,
     position: 'absolute',
@@ -17,6 +20,11 @@ const style = {
     marginLeft: -10,
     left: '50%',
     top: 11
+  },
+  textBig: {
+    color: Colors.ink.light,
+    fontSize: 28,
+    top: 32
   },
   progress: {
     position: 'absolute',
@@ -32,15 +40,38 @@ const style = {
 }
 
 class LevelProgress extends Component {
+  isBig() {
+    return this.props.size === 'big'
+  }
+
   render() {
     return (
       <div
-        style={{ ...style.container, ...this.props.style }}
+        style={{
+          ...style.container,
+          ...(this.isBig() ? style.containerBig : {}),
+          ...this.props.style,
+        }}
         onClick={e => this.props.onClick(e)}
         >
-        <div style={style.text}>{this.props.level}</div>
-        <CircularProgress mode="determinate" value={this.props.percentage} style={style.progress} />
-        <CircularProgress mode="determinate" value={100} style={style.progressBg} thickness={style.progressBg.thickness} />
+        <div
+          style={{
+            ...style.text,
+            ...(this.isBig() ? style.textBig : {})
+          }}>
+          {this.props.level}
+        </div>
+        <CircularProgress
+          mode="determinate"
+          value={this.props.percentage}
+          size={this.isBig() ? style.containerBig.width : undefined}
+          style={style.progress} />
+          <CircularProgress
+          mode="determinate"
+          value={100}
+          size={this.isBig() ? style.containerBig.width : undefined}
+          style={style.progressBg}
+          thickness={style.progressBg.thickness} />
       </div>
     )
   }
