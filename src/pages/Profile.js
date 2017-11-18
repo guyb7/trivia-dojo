@@ -61,7 +61,7 @@ class Profile extends Component {
     const { level, xp } = this.props.level
     const currentLevelStartXp = Level.getXpStart(level)
     const nextLevelStartXp = Level.getXpStart(level + 1)
-    return (xp - currentLevelStartXp) + '/' + (nextLevelStartXp - currentLevelStartXp)
+    return (xp - currentLevelStartXp) + ' / ' + (nextLevelStartXp - currentLevelStartXp)
   }
 
   render() {
@@ -85,8 +85,8 @@ class Profile extends Component {
                 </div>
               </div>
               <div style={style.sectionTile}>
-                <p>User Name</p>
-                <p>Email</p>
+                <p>{this.props.user.name}</p>
+                <p>{this.props.user.email || 'No email'}</p>
                 <p>Logout</p>
               </div>
             </div>

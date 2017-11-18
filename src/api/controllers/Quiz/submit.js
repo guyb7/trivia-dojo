@@ -2,7 +2,7 @@ import { query } from '../../Server/DB'
 
 const getAnswers = async questions => {
   const ids = questions.reduce((acc, q) => {
-    acc.push(q.id.replace(/[^0-9a-f\-]/g, ''))
+    acc.push(q.id.replace(/[^0-9a-f-]/g, ''))
     return acc
   }, [])
   const idsSql = ids.join("','")
