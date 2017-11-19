@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import AccountBalance from 'material-ui-icons/AccountBalance'
 import Close from 'mdi-material-ui/Close'
+import Creation from 'mdi-material-ui/Creation'
 import FlaskOutline from 'mdi-material-ui/FlaskOutline'
 import Food from 'mdi-material-ui/Food'
 import Football from 'mdi-material-ui/Football'
@@ -24,6 +25,9 @@ class Icon extends Component {
         break;
       case 'Close':
         IconComponent = Close
+        break;
+      case 'Stars':
+        IconComponent = Creation
         break;
       case 'Food':
         IconComponent = Food

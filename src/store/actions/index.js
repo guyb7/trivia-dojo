@@ -1,3 +1,4 @@
+import Achievements from './achievements'
 import Categories from './categories'
 import Level from './level'
 import Notifications from './notifications'
@@ -15,3 +16,6 @@ export const markCategoriesAsNotNew = Categories.markCategoriesAsNotNew
 
 export const addNotification = Notifications.addNotification
 export const removeNotification = Notifications.removeNotification
+
+export const setAchievements = Achievements.setAchievements
+export const completeAchievement = Achievements.completeAchievement

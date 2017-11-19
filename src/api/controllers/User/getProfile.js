@@ -4,6 +4,7 @@ import findUser from './findOne'
 import { getUserProgress } from '../Progress/'
 import { getUserCategories } from '../Categories/'
 import { getUserSettings } from '../Settings/'
+import { getUserAchievements } from '../Achievements/'
 
 const pickUserFields = user => {
   return {
@@ -19,7 +20,8 @@ export default async req => {
     user: findUser(userId),
     progress: getUserProgress(userId),
     categories: getUserCategories(userId),
-    settings: getUserSettings(userId)
+    settings: getUserSettings(userId),
+    achievements: getUserAchievements(userId)
   })
   return {
     success: true,
@@ -27,6 +29,7 @@ export default async req => {
     user: pickUserFields(results.user),
     progress: results.progress,
     categories: results.categories,
-    settings: results.settings
+    settings: results.settings,
+    achievements: results.achievements
   }
 }

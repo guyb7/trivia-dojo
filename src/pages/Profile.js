@@ -7,6 +7,7 @@ import Icon from '../components/Icon'
 import IconButton from 'material-ui/IconButton'
 
 import { closeUserDrawer } from '../store/actions'
+import Achievement from '../components/Achievement'
 import LevelProgress from '../components/LevelProgress'
 import Colors from '../components/Colors'
 import Level from '../shared/Level'
@@ -57,6 +58,16 @@ const style = {
     marginTop: 20,
     color: Colors.white,
     backgroundColor: Colors.blue.default
+  },
+  sectionWrap: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  achievement: {
+    backgroundColor: Colors.sky.light,
+    margin: 5,
+    flexGrow: 1,
+    width: '40%'
   }
 }
 
@@ -119,9 +130,18 @@ class Profile extends Component {
             </div>
             <h1 style={style.sectionHeader}>Achievements</h1>
             <div style={style.sectionWrap}>
-              <div style={style.sectionTile}>
-                Aaa
-              </div>
+              {
+                this.props.achievements.map(a => {
+                  return (
+                    <Achievement
+                      style={style.achievement}
+                      key={a.key}
+                      icon={a.icon}
+                      title={a.title}
+                      description={a.description} />
+                  )
+                })
+              }
             </div>
             <h1 style={style.sectionHeader}>Statistics</h1>
             <div style={style.sectionRow}>
@@ -141,6 +161,7 @@ class Profile extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    achievements: state.achievements,
     level: state.level,
     user: state.user
   }
