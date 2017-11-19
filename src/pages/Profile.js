@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import Button from 'material-ui/Button'
 import Drawer from 'material-ui/Drawer'
 import Icon from '../components/Icon'
 import IconButton from 'material-ui/IconButton'
@@ -43,10 +44,19 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 10
   },
   xp: {
     color: Colors.ink.light,
+  },
+  username: {
+    textAlign: 'center'
+  },
+  register: {
+    marginTop: 20,
+    color: Colors.white,
+    backgroundColor: Colors.blue.default
   }
 }
 
@@ -62,6 +72,10 @@ class Profile extends Component {
     const currentLevelStartXp = Level.getXpStart(level)
     const nextLevelStartXp = Level.getXpStart(level + 1)
     return (xp - currentLevelStartXp) + ' / ' + (nextLevelStartXp - currentLevelStartXp)
+  }
+
+  isGuest() {
+    return !this.props.user.loggedIn
   }
 
   render() {
@@ -85,9 +99,22 @@ class Profile extends Component {
                 </div>
               </div>
               <div style={style.sectionTile}>
-                <p>{this.props.user.name}</p>
-                <p>{this.props.user.email || 'No email'}</p>
-                <p>Logout</p>
+                {
+                  this.isGuest() &&
+                  <div>
+                    <div style={style.username}>{this.props.user.name}</div>
+                    <Button style={style.register}>
+                      Register
+                    </Button>
+                  </div>
+                }
+                {
+                  !this.isGuest() &&
+                  <div>
+                    <div style={style.username}>{this.props.user.name}</div>
+                    <p>{this.props.user.email || 'No email'}</p>
+                  </div>
+                }
               </div>
             </div>
             <h1 style={style.sectionHeader}>Achievements</h1>
