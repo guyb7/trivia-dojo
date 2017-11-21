@@ -67,7 +67,7 @@ const style = {
     backgroundColor: Colors.sky.light,
     margin: 5,
     flexGrow: 1,
-    width: '40%'
+    width: '30%'
   }
 }
 
