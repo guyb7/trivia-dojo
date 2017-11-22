@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Button from 'material-ui/Button'
 import Drawer from 'material-ui/Drawer'
 import Icon from '../components/Icon'
 import IconButton from 'material-ui/IconButton'
 
 import { closeUserDrawer } from '../store/actions'
-import Achievement from '../components/Achievement'
+import Achievement from '../components/Profile/Achievement'
 import LevelProgress from '../components/LevelProgress'
-import StatisticsItem from '../components/StatisticsItem'
+import Register from '../components/Profile/Register'
+import StatisticsItem from '../components/Profile/StatisticsItem'
 import Level from '../shared/Level'
 import Colors from '../components/Colors'
 
@@ -51,14 +51,6 @@ const style = {
   },
   xp: {
     color: Colors.ink.light,
-  },
-  username: {
-    textAlign: 'center'
-  },
-  register: {
-    marginTop: 20,
-    color: Colors.white,
-    backgroundColor: Colors.blue.default
   },
   sectionWrap: {
     display: 'flex',
@@ -116,25 +108,22 @@ class Profile extends Component {
                   {this.getXpRangeText()}
                 </div>
               </div>
-              <div style={style.sectionTile}>
-                {
-                  this.isGuest() &&
-                  <div>
-                    <div style={style.username}>{this.props.user.name}</div>
-                    <Button style={style.register}>
-                      Register
-                    </Button>
-                  </div>
-                }
-                {
-                  !this.isGuest() &&
-                  <div>
-                    <div style={style.username}>{this.props.user.name}</div>
-                    <p>{this.props.user.email || 'No email'}</p>
-                  </div>
-                }
-              </div>
+              {
+                !this.isGuest() &&
+                <div style={style.sectionTile}>
+                  <div style={style.username}>{this.props.user.name}</div>
+                  <p>{this.props.user.email || 'No email'}</p>
+                </div>
+              }
             </div>
+            {
+              this.isGuest() &&
+              <div style={style.sectionRow}>
+                <div style={style.sectionTile}>
+                  <Register />
+                </div>
+              </div>
+            }
             <h1 style={style.sectionHeader}>Achievements</h1>
             <div style={style.sectionWrap}>
               {

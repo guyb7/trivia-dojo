@@ -21,6 +21,9 @@ const style = {
 
 class TopBar extends Component {
   componentDidMount() {
+    if (this.props.user.id !== null) {
+      return
+    }
     this.getProfile()
   }
 

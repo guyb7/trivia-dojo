@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import Icon from './Icon'
-import Colors from './Colors'
+import Icon from '../Icon'
+import Colors from '../Colors'
 
 const style = {
   container: {
