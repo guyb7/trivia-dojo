@@ -11,8 +11,7 @@ if (module.hot) {
   module.hot.accept('./api', () => {
     console.log('🔁  HMR Reloading `/src/api/`...')
     server.removeListener('request', currentApp)
-    const newApp = require('./api/').default
-    server.on('request', newApp)
-    currentApp = newApp
+    currentApp = require('./api/').default
+    server.on('request', currentApp)
   })
 }
