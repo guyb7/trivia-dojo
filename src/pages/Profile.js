@@ -9,8 +9,9 @@ import IconButton from 'material-ui/IconButton'
 import { closeUserDrawer } from '../store/actions'
 import Achievement from '../components/Achievement'
 import LevelProgress from '../components/LevelProgress'
-import Colors from '../components/Colors'
+import StatisticsItem from '../components/StatisticsItem'
 import Level from '../shared/Level'
+import Colors from '../components/Colors'
 
 const style = {
   container: {
@@ -68,6 +69,12 @@ const style = {
     margin: 5,
     flexGrow: 1,
     width: '30%'
+  },
+  statistics: {
+    backgroundColor: Colors.sky.light,
+    margin: 5,
+    flexGrow: 1,
+    width: '23%'
   }
 }
 
@@ -142,15 +149,20 @@ class Profile extends Component {
                   )
                 })
               }
-            </div>
-            <h1 style={style.sectionHeader}>Statistics</h1>
-            <div style={style.sectionRow}>
-              <div style={style.sectionTile}>
-                123
               </div>
-              <div style={style.sectionTile}>
-                123
-              </div>
+              <h1 style={style.sectionHeader}>Statistics</h1>
+              <div style={style.sectionWrap}>
+                {
+                  this.props.statistics.map(s => {
+                    return (
+                      <StatisticsItem
+                        style={style.statistics}
+                        key={s.key}
+                        text={s.text}
+                        number={s.number} />
+                    )
+                  })
+                }
             </div>
           </div>
         </div>
@@ -163,7 +175,54 @@ const mapStateToProps = (state, ownProps) => {
   return {
     achievements: state.achievements,
     level: state.level,
-    user: state.user
+    user: state.user,
+    statistics: [
+      {
+        key: 'a',
+        text: 'Stuff',
+        number: 23
+      }, {
+        key: 'b',
+        text: 'Stuff 2',
+        number: 2.4
+      }, {
+        key: 'c',
+        text: 'More Stuff',
+        number: '65%'
+      }, {
+        key: 'd',
+        text: 'And more',
+        number: 21
+      }, {
+        key: 'e',
+        text: 'Even more',
+        number: '1,365'
+      }, {
+        key: 'f',
+        text: 'Some more',
+        number: 75
+      }, {
+        key: 'g',
+        text: 'Stuff 2',
+        number: 2.4
+      }, {
+        key: 'h',
+        text: 'More Stuff',
+        number: '65%'
+      }, {
+        key: 'i',
+        text: 'And more',
+        number: 21
+      }, {
+        key: 'j',
+        text: 'Even more',
+        number: '1,365'
+      }, {
+        key: 'k',
+        text: 'Some more',
+        number: 75
+      }
+    ]
   }
 }
 

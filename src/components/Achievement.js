@@ -42,7 +42,7 @@ class Achievement extends Component {
     }
   }
 
-  toggleTooltip = () => {
+  toggleDescription = () => {
     this.setState({
       ...this.state,
       open: !this.state.open
@@ -51,7 +51,7 @@ class Achievement extends Component {
 
   render() {
     return (
-      <div onClick={this.toggleTooltip} style={{ ...style.container, ...this.props.style }}>
+      <div onClick={this.toggleDescription} style={{ ...style.container, ...this.props.style }}>
         <Icon type={this.props.icon} style={style.icon} />
         <p style={style.title}>
           {this.props.title}
