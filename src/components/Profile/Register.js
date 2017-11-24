@@ -28,9 +28,13 @@ class Register extends Component {
     super(props)
     this.state = {
       mode: 'register',
+      isSubmitting: false,
       name: '',
+      nameError: false,
       email: '',
-      password: ''
+      emailError: false,
+      password: '',
+      passwordError: false
     }
   }
 
@@ -41,17 +45,35 @@ class Register extends Component {
     })
   }
 
-  onSubmit = () => {
-    this.setState({
-      ...this.state
-    })
-  }
-
   updateField = name => event => {
     this.setState({
       ...this.state,
       [name]: event.target.value,
+      [name + 'Error']: false
     })
+  }
+
+  onSubmit = () => {
+    const newState = { ...this.state }
+    if (this.state.email.length === 0) {
+      newState.emailError = true
+    }
+    if (this.state.mode !== 'reset' && this.state.password.length === 0) {
+      newState.passwordError = true
+    }
+    if (this.state.mode === 'register' && this.state.name.length === 0) {
+      newState.nameError = true
+    }
+    if (newState.emailError || newState.passwordError || newState.nameError) {
+      this.setState(newState)
+      return
+    }
+    newState.isSubmitting = true
+    this.setState(newState, this.register())
+  }
+
+  register() {
+
   }
 
   render() {
@@ -64,22 +86,38 @@ class Register extends Component {
           textColor="primary"
           fullWidth
         >
-          <Tab label='Register' value='register' />
-          <Tab label='Login' value='login' />
-          <Tab label='Reset' value='reset' />
+          <Tab
+            label='Register'
+            value='register'
+            disabled={this.state.isSubmitting}
+            />
+          <Tab
+            label='Login'
+            value='login'
+            disabled={this.state.isSubmitting}
+            />
+          <Tab
+            label='Reset'
+            value='reset'
+            disabled={this.state.isSubmitting}
+            />
         </Tabs>
         <TextField
           id="email"
           label="Email"
           value={this.state.email}
+          error={this.state.emailError}
+          disabled={this.state.isSubmitting}
           onChange={this.updateField('email')} />
-        {
-          this.state.mode !== 'reset' &&
+          {
+            this.state.mode !== 'reset' &&
             <TextField
               id="password"
               label="Password"
               value={this.state.password}
+              error={this.state.passwordError}
               type="password"
+              disabled={this.state.isSubmitting}
               onChange={this.updateField('password')} />
         }
         {
@@ -88,9 +126,14 @@ class Register extends Component {
               id="name"
               label="Name"
               value={this.state.name}
+              error={this.state.nameError}
+              disabled={this.state.isSubmitting}
               onChange={this.updateField('name')} />
         }
-        <Button onClick={this.onSubmit} style={style.loginButton}>
+        <Button
+          onClick={this.onSubmit}
+          disabled={this.state.isSubmitting}
+          style={style.loginButton}>
           Go
         </Button>
       </div>
