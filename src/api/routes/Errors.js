@@ -26,6 +26,21 @@ const errors = {
     id: 13,
     code: 500,
     message: 'Failed to register the user'
+  },
+  'register-existing-user-failed': {
+    id: 14,
+    code: 500,
+    message: 'Failed to register the user'
+  },
+  'no-user-id-in-session': {
+    id: 15,
+    code: 500,
+    message: 'Failed to register, no user found'
+  },
+  'invalid-registr-fields': {
+    id: 16,
+    code: 400,
+    message: 'Invalid registration fields'
   }
 }
 

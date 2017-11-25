@@ -4,6 +4,7 @@ import { registerIfNotLoggedIn } from '../controllers/User'
 import getApp from './getApp'
 import getStatus from './getStatus'
 import getProfile from './getProfile'
+import postRegister from './postRegister'
 import getQuiz from './getQuiz'
 import postQuiz from './postQuiz'
 import { notFound, serverError } from './Errors'
@@ -14,6 +15,7 @@ export default app => {
   app.use ('/api/*', registerIfNotLoggedIn)
   app.get ('/api/status', getStatus)
   app.get ('/api/profile', getProfile)
+  app.post('/api/register', postRegister)
   app.get ('/api/quiz/:category', getQuiz)
   app.post('/api/quiz', postQuiz)
   app.get ('/api/*', notFound)
