@@ -2,15 +2,24 @@ import uuid from 'uuid/v4'
 
 import { query } from '../../Server/DB'
 
-const register = async ({ name, role, password = null, email = null }) => {
+const register = async ({ name, role, passwordHash = null, email = null }) => {
   const id = uuid()
-  const res = await query('INSERT INTO users (id, name, role, email, password) VALUES ($1, $2, $3, $4, $5)', [
-    id,
-    name,
-    role,
-    email,
-    password
-  ])
+  let res
+  try {
+    res = await query('INSERT INTO users (id, name, role, email, password) VALUES ($1, $2, $3, $4, $5)', [
+      id,
+      name,
+      role,
+      email,
+      passwordHash
+    ])
+  } catch (e) {
+    if (e.error === 'duplicate key value violates unique constraint "unique-emails"') {
+      throw new Error('email-in-use')
+    } else {
+      throw e
+    }
+  }
   if (res.rowCount !== 1) {
     throw new Error('register-user-failed')
   }
@@ -23,13 +32,22 @@ const register = async ({ name, role, password = null, email = null }) => {
 
 const registerExisting = async ({ id, name, email, passwordHash }) => {
   const role = 'user'
-  const res = await query('UPDATE users SET (name, role, email, password) = ($2, $3, $4, $5) WHERE id = $1', [
-    id,
-    name,
-    role,
-    email,
-    passwordHash
-  ])
+  let res
+  try {
+      res = await query('UPDATE users SET (name, role, email, password) = ($2, $3, $4, $5) WHERE id = $1', [
+      id,
+      name,
+      role,
+      email,
+      passwordHash
+    ])
+  } catch (e) {
+    if (e.message === 'duplicate key value violates unique constraint "unique-emails"') {
+      throw new Error('email-in-use')
+    } else {
+      throw e
+    }
+  }
   if (res.rowCount !== 1) {
     throw new Error('register-existing-user-failed')
   }

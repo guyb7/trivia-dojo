@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
+import ErrorAPI from '../ErrorAPI'
+import { setUser } from '../../store/actions'
 
 import Button from 'material-ui/Button'
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -13,12 +16,13 @@ const style = {
     flexDirection: 'column',
     alignItems: 'stretch'
   },
-  registerButton: {
+  submitButton: {
     marginTop: 20,
-    color: Colors.white,
-    backgroundColor: Colors.blue.default
+    color: Colors.blue.darker,
+    backgroundColor: Colors.blue.light
   },
-  loginButton: {
+  error: {
+    color: Colors.red.default,
     marginTop: 20
   }
 }
@@ -29,6 +33,7 @@ class Register extends Component {
     this.state = {
       mode: 'register',
       isSubmitting: false,
+      errorMessage: false,
       name: '',
       nameError: false,
       email: '',
@@ -69,11 +74,35 @@ class Register extends Component {
       return
     }
     newState.isSubmitting = true
-    this.setState(newState, this.register())
+    newState.errorMessage = false
+    if (this.state.mode === 'register') {
+      this.setState(newState, this.register)
+    }
   }
 
-  register() {
-
+  register = async () => {
+    try {
+      const form = {
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name
+      }
+      const { data } = await axios.post('/api/register', form)
+      this.setState({
+        isSubmitting: false,
+        errorMessage: false
+      })
+      this.props.setUser({
+        id: data.id,
+        name: data.name
+      })
+    } catch (error) {
+      const errorMessage = ErrorAPI(error)
+      this.setState({
+        isSubmitting: false,
+        errorMessage
+      })
+    }
   }
 
   render() {
@@ -130,10 +159,14 @@ class Register extends Component {
               disabled={this.state.isSubmitting}
               onChange={this.updateField('name')} />
         }
+        {
+          this.state.errorMessage &&
+          <div style={style.error}>{this.state.errorMessage}</div>
+        }
         <Button
           onClick={this.onSubmit}
           disabled={this.state.isSubmitting}
-          style={style.loginButton}>
+          style={style.submitButton}>
           Go
         </Button>
       </div>
@@ -149,8 +182,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setUser() {
-      // dispatch(closeUserDrawer())
+    setUser(user) {
+      dispatch(setUser({
+        id: user.id,
+        loggedIn: true,
+        name: user.name
+      }))
     }
   }
 }

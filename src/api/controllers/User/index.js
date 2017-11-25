@@ -12,7 +12,7 @@ const postRegister = async (req) => {
   }
   const id = req.session.user.id
   const { name, email, password } = req.body
-  if (name.length === 0 || email.length === 0 || password.length < 6) {
+  if (!name || name.length === 0 || !email || email.length === 0 || !password || password.length < 6) {
     throw new Error('invalid-registr-fields')
   }
   const passwordHash = await bcrypt.hash(password, saltRounds)

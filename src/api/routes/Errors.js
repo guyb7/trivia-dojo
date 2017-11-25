@@ -41,6 +41,11 @@ const errors = {
     id: 16,
     code: 400,
     message: 'Invalid registration fields'
+  },
+  'email-in-use': {
+    id: 17,
+    code: 400,
+    message: 'Email already in use'
   }
 }
 
