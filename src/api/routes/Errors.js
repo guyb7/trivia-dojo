@@ -58,7 +58,8 @@ const parseError = (res, err) => {
     success: false,
     error: {
       id: error.id,
-      message: error.message
+      message: error.message,
+      ...err.details
     }
   })
 }

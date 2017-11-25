@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import getProfile from './getProfile'
 import { registerExisting } from './register'
 import registerIfNotLoggedIn from './registerIfNotLoggedIn'
+import validateRegistrationFields from './validateRegistrationFields'
 
 const saltRounds = 10
 
@@ -12,9 +13,7 @@ const postRegister = async (req) => {
   }
   const id = req.session.user.id
   const { name, email, password } = req.body
-  if (!name || name.length === 0 || !email || email.length === 0 || !password || password.length < 6) {
-    throw new Error('invalid-registr-fields')
-  }
+  validateRegistrationFields({ name, email, password })
   const passwordHash = await bcrypt.hash(password, saltRounds)
   const user = await registerExisting({ id, name, email, passwordHash })
   return user
