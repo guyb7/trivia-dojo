@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import ErrorAPI from '../ErrorAPI'
-import { setUser } from '../../store/actions'
+import { setCategories, setLevelXp, setUser, setAchievements } from '../../store/actions'
 
 import Button from 'material-ui/Button'
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -75,8 +75,14 @@ class Register extends Component {
     }
     newState.isSubmitting = true
     newState.errorMessage = false
-    if (this.state.mode === 'register') {
-      this.setState(newState, this.register)
+    switch (this.state.mode) {
+      case 'register':
+        this.setState(newState, this.register)
+        break
+      case 'login':
+        this.setState(newState, this.login)
+        break
+      default:
     }
   }
 
@@ -98,6 +104,29 @@ class Register extends Component {
       })
     } catch (error) {
       const errorMessage = ErrorAPI(error)
+      this.setState({
+        isSubmitting: false,
+        errorMessage
+      })
+    }
+  }
+
+  login = async () => {
+    try {
+      const form = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      await axios.post('/api/login', form)
+      const { data } = await axios.get('/api/profile')
+      this.setState({
+        isSubmitting: false,
+        errorMessage: false
+      })
+      this.props.setProfile(data)
+    } catch (error) {
+      const errorMessage = ErrorAPI(error)
+      console.log('errorMessage', errorMessage)
       this.setState({
         isSubmitting: false,
         errorMessage
@@ -188,6 +217,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         loggedIn: true,
         name: user.name
       }))
+    },
+    setProfile(profile) {
+      dispatch(setUser({
+        id: profile.id,
+        loggedIn: profile.user.role !== 'guest',
+        name: profile.user.name
+      }))
+      dispatch(setLevelXp(profile.progress.xp))
+      dispatch(setCategories(profile.categories))
+      dispatch(setAchievements(profile.achievements))
     }
   }
 }

@@ -10,7 +10,7 @@ import postQuiz from './postQuiz'
 import { notFound, serverError } from './Errors'
 
 export default app => {
-  app.post('/user/login', authPassword)
+  app.post('/api/login', authPassword)
   app.post('/api/register', postRegister)
   
   app.use ('/api/*', registerIfNotLoggedIn)
