@@ -1,6 +1,7 @@
 import uuid from 'uuid/v4'
 
 import { query } from '../../Server/DB'
+import safeFields from './safeFields'
 
 const register = async ({ name, role, passwordHash = null, email = null }) => {
   const id = uuid()
@@ -23,11 +24,11 @@ const register = async ({ name, role, passwordHash = null, email = null }) => {
   if (res.rowCount !== 1) {
     throw new Error('register-user-failed')
   }
-  return {
+  return safeFields({
     id,
     name,
     role
-  }
+  })
 }
 
 const registerExisting = async ({ id, name, email, passwordHash }) => {
@@ -51,11 +52,11 @@ const registerExisting = async ({ id, name, email, passwordHash }) => {
   if (res.rowCount !== 1) {
     throw new Error('register-existing-user-failed')
   }
-  return {
+  return safeFields({
     id,
     name,
     role
-  }
+  })
 }
 
 export {

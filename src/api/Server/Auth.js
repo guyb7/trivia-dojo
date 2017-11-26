@@ -3,6 +3,7 @@ import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 
 import findUser from '../controllers/User/findOne'
+import safeFields from '../controllers/User/safeFields'
 
 passport.use(new LocalStrategy(
   { usernameField: 'email' },
@@ -13,11 +14,7 @@ passport.use(new LocalStrategy(
       if (!isValid) {
         throw new Error()
       }
-      return done(null, {
-        id: user.id,
-        name: user.name,
-        role: user.role
-      })
+      return done(null, safeFields(user))
     } catch (e) {
       return done(null, false)
     }

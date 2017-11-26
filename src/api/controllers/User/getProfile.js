@@ -1,18 +1,11 @@
 import Promise from 'bluebird'
 
 import findUser from './findOne'
+import safeFields from './safeFields'
 import { getUserProgress } from '../Progress/'
 import { getUserCategories } from '../Categories/'
 import { getUserSettings } from '../Settings/'
 import { getUserAchievements } from '../Achievements/'
-
-const pickUserFields = user => {
-  return {
-    id: user.id,
-    name: user.name,
-    role: user.role
-  }
-}
 
 export default async req => {
   const userId = req.session.user.id
@@ -26,7 +19,7 @@ export default async req => {
   return {
     success: true,
     id: results.user.id,
-    user: pickUserFields(results.user),
+    user: safeFields(results.user),
     progress: results.progress,
     categories: results.categories,
     settings: results.settings,
