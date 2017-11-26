@@ -17,7 +17,7 @@ const pickUserFields = user => {
 export default async req => {
   const userId = req.session.user.id
   const results = await Promise.props({
-    user: findUser(userId),
+    user: findUser({ userId }),
     progress: getUserProgress(userId),
     categories: getUserCategories(userId),
     settings: getUserSettings(userId),

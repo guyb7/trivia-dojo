@@ -11,11 +11,11 @@ import { notFound, serverError } from './Errors'
 
 export default app => {
   app.post('/user/login', authPassword)
+  app.post('/api/register', postRegister)
   
   app.use ('/api/*', registerIfNotLoggedIn)
   app.get ('/api/status', getStatus)
   app.get ('/api/profile', getProfile)
-  app.post('/api/register', postRegister)
   app.get ('/api/quiz/:category', getQuiz)
   app.post('/api/quiz', postQuiz)
   app.get ('/api/*', notFound)

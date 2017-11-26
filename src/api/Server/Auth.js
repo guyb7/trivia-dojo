@@ -1,19 +1,24 @@
+import bcrypt from 'bcrypt'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 
-const mockDbUsers = {
-  123: {
-    id: 123,
-    name: 'Youzer',
-    role: 'user'
-  }
-}
+import findUser from '../controllers/User/findOne'
 
 passport.use(new LocalStrategy(
-  (username, password, done) => {
-    if (username === 'user' && password === 'pass') {
-      return done(null, mockDbUsers[123])
-    } else {
+  { usernameField: 'email' },
+  async (email, password, done) => {
+    try {
+      const user = await findUser({ email })
+      const isValid = await validatePassword(password, user.password)
+      if (!isValid) {
+        throw new Error()
+      }
+      return done(null, {
+        id: user.id,
+        name: user.name,
+        role: user.role
+      })
+    } catch (e) {
       return done(null, false)
     }
   }
@@ -22,6 +27,10 @@ passport.use(new LocalStrategy(
 const mountAuth = app => {
   app.use(passport.initialize())
   app.use(passport.session())
+}
+
+const validatePassword = async (password, passwordHash) => {
+  return await bcrypt.compare(password, passwordHash)
 }
 
 const authPassword = (req, res, next) => {
