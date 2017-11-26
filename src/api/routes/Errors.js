@@ -46,6 +46,11 @@ const errors = {
     id: 17,
     code: 400,
     message: 'Email already in use'
+  },
+  'xp-not-found': {
+    id: 18,
+    code: 500,
+    message: 'Could not determine user XP'
   }
 }
 
