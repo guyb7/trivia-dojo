@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import _times from 'lodash/times'
 
 import Drawer from 'material-ui/Drawer'
 import Icon from '../components/Icon'
@@ -56,14 +57,13 @@ const style = {
     display: 'flex',
     flexWrap: 'wrap'
   },
-  achievement: {
+  item: {
     backgroundColor: Colors.sky.light,
     margin: 5,
     flexGrow: 1,
-    width: '30%'
+    width: '23%'
   },
-  statistics: {
-    backgroundColor: Colors.sky.light,
+  emptyItem: {
     margin: 5,
     flexGrow: 1,
     width: '23%'
@@ -130,7 +130,7 @@ class Profile extends Component {
                 this.props.achievements.map(a => {
                   return (
                     <Achievement
-                      style={style.achievement}
+                      style={style.item}
                       key={a.key}
                       icon={a.icon}
                       title={a.title}
@@ -138,20 +138,36 @@ class Profile extends Component {
                   )
                 })
               }
-              </div>
-              <h1 style={style.sectionHeader}>Statistics</h1>
-              <div style={style.sectionWrap}>
-                {
-                  this.props.statistics.map(s => {
-                    return (
-                      <StatisticsItem
-                        style={style.statistics}
-                        key={s.key}
-                        text={s.text}
-                        number={s.number} />
-                    )
-                  })
-                }
+              {
+                _times(3 - this.props.achievements.length % 3, n => 
+                  <div
+                    key={'empty-' + n}
+                    style={style.emptyItem}>
+                  </div>
+                )
+              }
+            </div>
+            <h1 style={style.sectionHeader}>Statistics</h1>
+            <div style={style.sectionWrap}>
+              {
+                this.props.statistics.map(s => {
+                  return (
+                    <StatisticsItem
+                      style={style.item}
+                      key={s.key}
+                      text={s.text}
+                      number={s.number} />
+                  )
+                })
+              }
+              {
+                _times(3 - this.props.statistics.length % 3, n => 
+                  <div
+                    key={'empty-' + n}
+                    style={style.emptyItem}>
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>

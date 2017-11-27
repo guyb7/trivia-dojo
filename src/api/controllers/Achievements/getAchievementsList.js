@@ -15,6 +15,11 @@ export default () => {
       icon: 'Stars',
       title: 'Perfect Quiz',
       description: 'Complete a quiz without any wrong answers'
+    }, {
+      key: 'quick-answers',
+      icon: 'Stars',
+      title: 'Quick Answers',
+      description: 'Complete a quiz under 60 seconds'
     }
   ]
 }
