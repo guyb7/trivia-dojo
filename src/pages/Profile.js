@@ -181,53 +181,7 @@ const mapStateToProps = (state, ownProps) => {
     achievements: state.achievements,
     level: state.level,
     user: state.user,
-    statistics: [
-      {
-        key: 'a',
-        text: 'Stuff',
-        number: 23
-      }, {
-        key: 'b',
-        text: 'Stuff 2',
-        number: 2.4
-      }, {
-        key: 'c',
-        text: 'More Stuff',
-        number: '65%'
-      }, {
-        key: 'd',
-        text: 'And more',
-        number: 21
-      }, {
-        key: 'e',
-        text: 'Even more',
-        number: '1,365'
-      }, {
-        key: 'f',
-        text: 'Some more',
-        number: 75
-      }, {
-        key: 'g',
-        text: 'Stuff 2',
-        number: 2.4
-      }, {
-        key: 'h',
-        text: 'More Stuff',
-        number: '65%'
-      }, {
-        key: 'i',
-        text: 'And more',
-        number: 21
-      }, {
-        key: 'j',
-        text: 'Even more',
-        number: '1,365'
-      }, {
-        key: 'k',
-        text: 'Some more',
-        number: 75
-      }
-    ]
+    statistics: state.statistics
   }
 }
 

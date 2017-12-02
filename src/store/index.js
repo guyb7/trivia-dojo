@@ -4,6 +4,7 @@ import achievements from './reducers/achievements'
 import categories from './reducers/categories'
 import level from './reducers/level'
 import notifications from './reducers/notifications'
+import statistics from './reducers/statistics'
 import user from './reducers/user'
 
 const appReducers = combineReducers({
@@ -11,6 +12,7 @@ const appReducers = combineReducers({
   categories,
   level,
   notifications,
+  statistics,
   user
 })
 
