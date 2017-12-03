@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 
 import achievements from './reducers/achievements'
 import categories from './reducers/categories'
@@ -16,9 +16,11 @@ const appReducers = combineReducers({
   user
 })
 
-let store = createStore(
+const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
+const store = createStore(
   appReducers,
-  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  /* preloadedState, */
+  composeEnhancers(applyMiddleware())
 )
 
 export default store
