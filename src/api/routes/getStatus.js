@@ -1,7 +1,6 @@
-export default (req, res) => {
-  res.json({
-    success: true,
+export default async req => {
+  return {
     user: req.user,
     session: req.session
-  })
+  }
 }

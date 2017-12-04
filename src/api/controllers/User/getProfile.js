@@ -19,7 +19,6 @@ export default async req => {
     statistics: getUserStatistics(userId)
   })
   return {
-    success: true,
     id: results.user.id,
     user: safeFields(results.user),
     progress: results.progress,
