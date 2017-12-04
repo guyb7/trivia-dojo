@@ -21,9 +21,7 @@ const disconnect = async () => {
 }
 
 const query = async (query, params) => {
-  const client = await pool.connect()
-  const res = await client.query(query, params)
-  return res
+  return await pool.query(query, params)
 }
 
 export {
