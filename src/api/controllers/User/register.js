@@ -1,6 +1,7 @@
 import uuid from 'uuid/v4'
 
 import { query } from '../../Server/DB'
+import { addDefaultCategories } from '../Categories'
 import safeFields from './safeFields'
 
 const register = async ({ name, role, passwordHash = null, email = null }) => {
@@ -14,6 +15,7 @@ const register = async ({ name, role, passwordHash = null, email = null }) => {
       email,
       passwordHash
     ])
+    await addDefaultCategories(id)
   } catch (e) {
     if (e.error === 'duplicate key value violates unique constraint "unique-emails"') {
       throw new Error('email-in-use')

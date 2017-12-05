@@ -1,4 +1,5 @@
 import Promise from 'bluebird'
+import _pick from 'lodash/pick'
 
 import findUser from './findOne'
 import safeFields from './safeFields'
@@ -22,7 +23,7 @@ export default async req => {
     id: results.user.id,
     user: safeFields(results.user),
     progress: results.progress,
-    categories: results.categories,
+    categories: results.categories.map(c => _pick(c, ['id', 'title', 'icon'])),
     settings: results.settings,
     achievements: results.achievements,
     statistics: results.statistics
