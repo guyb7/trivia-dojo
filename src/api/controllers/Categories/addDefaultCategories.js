@@ -9,5 +9,5 @@ export default async userId => {
       ($1, 'music'),
       ($1, 'pop'),
       ($1, 'sports')`
-  const res = await query(sql, [userId])
+  await query(sql, [userId])
 }

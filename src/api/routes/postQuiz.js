@@ -4,7 +4,7 @@ import { parseError } from './Errors'
 export default (req, res) => {
   const success = async () => {
     try {
-      const results = await submitQuiz(req.body.questions)
+      const results = await submitQuiz(req)
       res.json(results)
     } catch (e) {
       parseError(res, e)

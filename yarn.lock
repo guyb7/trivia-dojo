@@ -1978,6 +1978,10 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+elo-rank@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/elo-rank/-/elo-rank-1.0.3.tgz#3573bc3171bcb09e27f7230886e7ed63efdcdd02"
+
 emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
