@@ -7,6 +7,9 @@ import getProfile from './getProfile'
 import postRegister from './postRegister'
 import getQuiz from './getQuiz'
 import postQuiz from './postQuiz'
+import adminGetCategories from '../controllers/Admin/getCategories'
+import adminGetQuestions from '../controllers/Admin/getQuestions'
+import adminGetUsers from '../controllers/Admin/getUsers'
 import { notFound, parseError, serverError } from './Errors'
 
 const asyncMiddleware = promise => {
@@ -41,10 +44,13 @@ export default app => {
   app.use ('/api/*', registerIfNotLoggedIn)
   app.get ('/api/status', asyncMiddleware(getStatus))
   app.get ('/api/profile', asyncMiddleware(getProfile))
-  app.get ('/api/quiz/:category', getQuiz)
-  app.post('/api/quiz', postQuiz)
-  
-  app.get ('/api/admin', ensureAdmin, (req, res) => { res.json({ admin: true })})
+  app.get ('/api/quiz/:category', asyncMiddleware(getQuiz))
+  app.post('/api/quiz', asyncMiddleware(postQuiz))
+
+  app.use ('/api/admin*', ensureAdmin)
+  app.get ('/api/admin/categories', asyncMiddleware(adminGetCategories))
+  app.get ('/api/admin/questions/:category', asyncMiddleware(adminGetQuestions))
+  app.get ('/api/admin/users', asyncMiddleware(adminGetUsers))
 
   app.get ('/api/*', notFound)
   app.use (serverError)
