@@ -1,15 +1,3 @@
-
-ALTER TABLE trivia.user_categories
-    OWNER to trivia_admin;
-
-ALTER TABLE trivia.questions
-    ALTER COLUMN category TYPE character varying ;
-ALTER TABLE trivia.questions
-    ALTER COLUMN category SET NOT NULL;
-
-ALTER TABLE trivia.questions
-    ADD COLUMN rank integer NOT NULL DEFAULT 1500;
-
 CREATE TABLE trivia.user_categories
 (
     user_id character varying NOT NULL,
@@ -28,3 +16,14 @@ CREATE TABLE trivia.user_categories
 WITH (
     OIDS = FALSE
 );
+
+ALTER TABLE trivia.user_categories
+    OWNER to trivia_admin;
+
+ALTER TABLE trivia.questions
+    ALTER COLUMN category TYPE character varying ;
+ALTER TABLE trivia.questions
+    ALTER COLUMN category SET NOT NULL;
+
+ALTER TABLE trivia.questions
+    ADD COLUMN rank integer NOT NULL DEFAULT 1500;

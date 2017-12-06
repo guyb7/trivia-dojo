@@ -1,4 +1,6 @@
 import EloRank from 'elo-rank'
+import _each from 'lodash/each'
+import _mean from 'lodash/mean'
 
 import { getUserCategories } from '../Categories'
 import { query } from '../../Server/DB'
@@ -45,23 +47,50 @@ const calcRanks = (userRank, questionRank, isCorrect) => {
   }
 }
 
-const updateUserRanks = async userNewRanks => {
-  //TODO
-  console.log('userNewRanks', userNewRanks)
+const updateUserRanks = async (userNewRanks, userId) => {
+  const queries = []
+  _each(userNewRanks, (ranks, category) => {
+    const avg = Math.round(_mean(ranks))
+    queries.push({
+      sql: `
+      UPDATE user_categories
+      SET rank=$3
+      WHERE user_id=$1 AND category_id=$2
+      `,
+      params: [userId, category, avg]
+    })
+  })
+  for (let q of queries) {
+    await query(q.sql, q.params)
+  }
 }
 
 const updateQuestionsRank = async questionsNewRanks => {
-  //TODO
-  console.log('questionsNewRanks', questionsNewRanks)
+  //TODO use prepared statements
+  const queries = []
+  _each(questionsNewRanks, question => {
+    queries.push({
+      sql: `
+      UPDATE questions
+      SET rank=$2
+      WHERE id=$1
+      `,
+      params: [question.id, question.newRank]
+    })
+  })
+  for (let q of queries) {
+    await query(q.sql, q.params)
+  }
 }
 
 // Calcs the ELO rank for each question.
 // Each question is updated compared to the user category rank before the submission.
 // The user category rank is updated to the average of the ranks with every question.
 export default async req => {
+  const userId = req.session.user.id
   const userAnswers = req.body.questions
   const questions = await getQuestionsData(userAnswers)
-  const userRanks = await getUserRanks(req.session.user.id)
+  const userRanks = await getUserRanks(userId)
   let score = 0
   let maxQuizScore = 0
   const userNewRanks = {}
@@ -93,7 +122,7 @@ export default async req => {
     return acc
   }, {})
 
-  await updateUserRanks(userNewRanks)
+  await updateUserRanks(userNewRanks, userId)
   await updateQuestionsRank(questionsNewRanks)
 
   return {
