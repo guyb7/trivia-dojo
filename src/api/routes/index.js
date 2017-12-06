@@ -1,5 +1,5 @@
 import { authPassword } from '../Server/Auth'
-import { registerIfNotLoggedIn } from '../controllers/User'
+import { isAdmin, registerIfNotLoggedIn } from '../controllers/User'
 
 import getApp from './getApp'
 import getStatus from './getStatus'
@@ -24,6 +24,16 @@ const asyncMiddleware = promise => {
   }
 }
 
+const ensureAdmin = (req, res, next) => {
+  isAdmin(req)
+  .then(() => {
+    next()
+  })
+  .catch(e => {
+    next(e)
+  })
+}
+
 export default app => {
   app.post('/api/login', authPassword)
   app.post('/api/register', postRegister)
@@ -33,8 +43,11 @@ export default app => {
   app.get ('/api/profile', asyncMiddleware(getProfile))
   app.get ('/api/quiz/:category', getQuiz)
   app.post('/api/quiz', postQuiz)
+  
+  app.get ('/api/admin', ensureAdmin, (req, res) => { res.json({ admin: true })})
+
   app.get ('/api/*', notFound)
-  app.use(serverError)
+  app.use (serverError)
 
   app.get ('/*', getApp)
 }

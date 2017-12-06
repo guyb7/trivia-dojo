@@ -51,6 +51,16 @@ const errors = {
     id: 18,
     code: 500,
     message: 'Could not determine user XP'
+  },
+  'not-authorized': {
+    id: 19,
+    code: 403,
+    message: 'You are not authorized to make this request'
+  },
+  'failed to load session': {
+    id: 20,
+    code: 400,
+    message: 'You are not logged in'
   }
 }
 
