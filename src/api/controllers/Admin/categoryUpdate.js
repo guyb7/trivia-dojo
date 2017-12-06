@@ -26,7 +26,17 @@ export default async req => {
     WHERE id=$1;
   `
   try {
-    await query(sql, params)
+    const res = await query(sql, params)
+    if (res.rowCount === 0) {
+      const e = new Error('No such category')
+      e.noCatch = true
+      throw e
+    } else if (res.rowCount > 1) {
+      console.error(res)
+      const e = new Error('Deleted rows: ' + res.rowCount)
+      e.noCatch = true
+      throw e
+    }
   } catch (e) {
     e.noCatch = true
     throw e

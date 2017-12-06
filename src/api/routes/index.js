@@ -7,11 +7,12 @@ import getProfile from './getProfile'
 import postRegister from './postRegister'
 import getQuiz from './getQuiz'
 import postQuiz from './postQuiz'
-import adminGetCategories from '../controllers/Admin/getCategories'
-import adminCreateCategory from '../controllers/Admin/createCategory'
-import adminUpdateCategory from '../controllers/Admin/updateCategory'
-import adminGetQuestions from '../controllers/Admin/getQuestions'
-import adminGetUsers from '../controllers/Admin/getUsers'
+import adminGetCategories from '../controllers/Admin/categoryList'
+import adminCreateCategory from '../controllers/Admin/categoryCreate'
+import adminUpdateCategory from '../controllers/Admin/categoryUpdate'
+import adminDeleteCategory from '../controllers/Admin/categoryDelete'
+import adminGetQuestions from '../controllers/Admin/questionList'
+import adminGetUsers from '../controllers/Admin/userList'
 import { notFound, parseError, serverError } from './Errors'
 
 const asyncMiddleware = promise => {
@@ -49,12 +50,13 @@ export default app => {
   app.get ('/api/quiz/:category', asyncMiddleware(getQuiz))
   app.post('/api/quiz', asyncMiddleware(postQuiz))
 
-  app.use ('/api/admin/*', ensureAdmin)
-  app.get ('/api/admin/categories', asyncMiddleware(adminGetCategories))
-  app.post('/api/admin/categories', asyncMiddleware(adminCreateCategory))
-  app.put ('/api/admin/categories/:category', asyncMiddleware(adminUpdateCategory))
-  app.get ('/api/admin/questions/:category', asyncMiddleware(adminGetQuestions))
-  app.get ('/api/admin/users', asyncMiddleware(adminGetUsers))
+  app.use   ('/api/admin/*', ensureAdmin)
+  app.get   ('/api/admin/categories', asyncMiddleware(adminGetCategories))
+  app.post  ('/api/admin/categories', asyncMiddleware(adminCreateCategory))
+  app.put   ('/api/admin/categories/:category', asyncMiddleware(adminUpdateCategory))
+  app.delete('/api/admin/categories/:category', asyncMiddleware(adminDeleteCategory))
+  app.get   ('/api/admin/questions/:category', asyncMiddleware(adminGetQuestions))
+  app.get   ('/api/admin/users', asyncMiddleware(adminGetUsers))
 
   app.get ('/api/*', notFound)
   app.use (serverError)
