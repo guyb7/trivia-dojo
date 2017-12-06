@@ -64,8 +64,22 @@ const errors = {
   }
 }
 
+const findError = err => {
+  if (err.noCatch === true) {
+    return {
+      id: 500,
+      code: 400,
+      message: err.message
+    }
+  }
+  if (errors[err.message]) {
+    return errors[err.message]
+  }
+  return errors['unhandled-error']
+}
+
 const parseError = (res, err) => {
-  const error = errors[err.message] || errors['unhandled-error']
+  const error = findError(err)
   if (error.code >= 500) {
     console.error(err.stack)
   }

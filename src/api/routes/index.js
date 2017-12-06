@@ -8,6 +8,7 @@ import postRegister from './postRegister'
 import getQuiz from './getQuiz'
 import postQuiz from './postQuiz'
 import adminGetCategories from '../controllers/Admin/getCategories'
+import adminCreateCategory from '../controllers/Admin/createCategory'
 import adminGetQuestions from '../controllers/Admin/getQuestions'
 import adminGetUsers from '../controllers/Admin/getUsers'
 import { notFound, parseError, serverError } from './Errors'
@@ -47,8 +48,9 @@ export default app => {
   app.get ('/api/quiz/:category', asyncMiddleware(getQuiz))
   app.post('/api/quiz', asyncMiddleware(postQuiz))
 
-  app.use ('/api/admin*', ensureAdmin)
+  app.use ('/api/admin/*', ensureAdmin)
   app.get ('/api/admin/categories', asyncMiddleware(adminGetCategories))
+  app.post('/api/admin/categories', asyncMiddleware(adminCreateCategory))
   app.get ('/api/admin/questions/:category', asyncMiddleware(adminGetQuestions))
   app.get ('/api/admin/users', asyncMiddleware(adminGetUsers))
 
