@@ -9,11 +9,11 @@ export default async req => {
     sqlFields.push('id=$' + (params.length + 1))
     params.push(id)
   }
-  if (id) {
+  if (title) {
     sqlFields.push('title=$' + (params.length + 1))
     params.push(title)
   }
-  if (id) {
+  if (icon) {
     sqlFields.push('icon=$' + (params.length + 1))
     params.push(icon)
   }
@@ -33,7 +33,7 @@ export default async req => {
       throw e
     } else if (res.rowCount > 1) {
       console.error(res)
-      const e = new Error('Deleted rows: ' + res.rowCount)
+      const e = new Error('Updated rows: ' + res.rowCount)
       e.noCatch = true
       throw e
     }

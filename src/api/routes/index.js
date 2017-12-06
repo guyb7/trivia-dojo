@@ -12,6 +12,9 @@ import adminCreateCategory from '../controllers/Admin/categoryCreate'
 import adminUpdateCategory from '../controllers/Admin/categoryUpdate'
 import adminDeleteCategory from '../controllers/Admin/categoryDelete'
 import adminGetQuestions from '../controllers/Admin/questionList'
+import adminCreateQuestion from '../controllers/Admin/questionCreate'
+import adminUpdateQuestion from '../controllers/Admin/questionUpdate'
+import adminDeleteQuestion from '../controllers/Admin/questionDelete'
 import adminGetUsers from '../controllers/Admin/userList'
 import { notFound, parseError, serverError } from './Errors'
 
@@ -56,6 +59,9 @@ export default app => {
   app.put   ('/api/admin/categories/:category', asyncMiddleware(adminUpdateCategory))
   app.delete('/api/admin/categories/:category', asyncMiddleware(adminDeleteCategory))
   app.get   ('/api/admin/questions/:category', asyncMiddleware(adminGetQuestions))
+  app.post  ('/api/admin/questions', asyncMiddleware(adminCreateQuestion))
+  app.put   ('/api/admin/questions/:question', asyncMiddleware(adminUpdateQuestion))
+  app.delete('/api/admin/questions/:question', asyncMiddleware(adminDeleteQuestion))
   app.get   ('/api/admin/users', asyncMiddleware(adminGetUsers))
 
   app.get ('/api/*', notFound)
