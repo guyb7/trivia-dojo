@@ -10,6 +10,9 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import QuizCasual from './pages/QuizCasual'
 import AdminHome from './pages/Admin'
+import AdminCategories from './pages/AdminCategories'
+// import AdminQuestions from './pages/AdminQuestions'
+// import AdminUsers from './pages/AdminUsers'
 import './App.css'
 
 const style = {
@@ -28,6 +31,9 @@ const App = () => (
         <Route exact path="/" component={Home} />
         <Route exact path="/casual/:category" component={QuizCasual} />
         <Route exact path="/admin" component={AdminHome} />
+        <Route exact path="/admin/categories" component={AdminCategories} />
+        {/* <Route exact path="/admin/questions" component={AdminQuestions} /> */}
+        {/* <Route exact path="/admin/users" component={AdminUsers} /> */}
       </Switch>
     </div>
   </Provider>

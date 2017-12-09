@@ -67,17 +67,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    // markCategoriesAsNotNew() {
-    //   dispatch(markCategoriesAsNotNew())
-    // }
-  }
-}
-
 const connectedAdminHome = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Home)
 
 export default connectedAdminHome
