@@ -9,6 +9,7 @@ import Notifications from './components/Notifications'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import QuizCasual from './pages/QuizCasual'
+import AdminHome from './pages/Admin'
 import './App.css'
 
 const style = {
@@ -26,6 +27,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/casual/:category" component={QuizCasual} />
+        <Route exact path="/admin" component={AdminHome} />
       </Switch>
     </div>
   </Provider>

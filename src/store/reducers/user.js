@@ -1,6 +1,6 @@
 const defaultState = {
   id: null,
-  loggedIn: false,
+  role: 'guest',
   name: 'Guest',
   isDrawerOpen: false
 }

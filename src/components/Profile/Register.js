@@ -214,14 +214,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setUser(user) {
       dispatch(setUser({
         id: user.id,
-        loggedIn: true,
+        role: 'guest',
         name: user.name
       }))
     },
     setProfile(profile) {
       dispatch(setUser({
         id: profile.id,
-        loggedIn: profile.user.role !== 'guest',
+        role: profile.user.role,
         name: profile.user.name
       }))
       dispatch(setLevelXp(profile.progress.xp))

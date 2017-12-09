@@ -85,7 +85,7 @@ class Profile extends Component {
   }
 
   isGuest() {
-    return !this.props.user.loggedIn
+    return this.props.user.role === 'guest'
   }
 
   render() {

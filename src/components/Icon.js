@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
 import AccountBalance from 'material-ui-icons/AccountBalance'
+import AccountMultiple from 'mdi-material-ui/AccountMultiple'
 import Close from 'mdi-material-ui/Close'
 import Creation from 'mdi-material-ui/Creation'
 import FlaskOutline from 'mdi-material-ui/FlaskOutline'
 import Food from 'mdi-material-ui/Food'
 import Football from 'mdi-material-ui/Football'
+import ImageFilterNone from 'mdi-material-ui/ImageFilterNone'
 import LocalMovies from 'material-ui-icons/LocalMovies'
 import LocalOffer from 'material-ui-icons/LocalOffer'
 import MusicNote from 'material-ui-icons/MusicNote'
@@ -15,6 +17,7 @@ import Public from 'material-ui-icons/Public'
 import SdStorage from 'material-ui-icons/SdStorage'
 import Security from 'material-ui-icons/Security'
 import Star from 'material-ui-icons/Star'
+import TagMultiple from 'mdi-material-ui/TagMultiple'
 
 class Icon extends Component {
   render() {
@@ -22,6 +25,9 @@ class Icon extends Component {
     switch (this.props.type) {
       case 'Bank':
         IconComponent = AccountBalance
+        break;
+      case 'Categories':
+        IconComponent = TagMultiple
         break;
       case 'Close':
         IconComponent = Close
@@ -47,6 +53,9 @@ class Icon extends Component {
       case 'Palette':
         IconComponent = Palette
         break;
+      case 'Questions':
+        IconComponent = ImageFilterNone
+        break;
       case 'Technology':
         IconComponent = SdStorage
         break;
@@ -61,6 +70,9 @@ class Icon extends Component {
         break;
       case 'Star':
         IconComponent = Star
+        break;
+      case 'Users':
+        IconComponent = AccountMultiple
         break;
       default:
     }
