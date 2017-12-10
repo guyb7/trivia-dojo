@@ -3,8 +3,8 @@ import axios from 'axios'
 import _once from 'lodash/once'
 
 import Button from 'material-ui/Button'
+import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField'
-import AddIcon from 'material-ui-icons/Add'
 import List, {
   ListItem,
   ListItemIcon,
@@ -17,10 +17,16 @@ import Dialog, {
 } from 'material-ui/Dialog'
 
 import Icon from '../components/Icon'
+import Colors from '../components/Colors'
 
 const style = {
   container: {
     padding: 20
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    color: Colors.ink.lighter
   },
   fab: {
     position: 'fixed',
@@ -45,11 +51,16 @@ class AdminCategories extends Component {
   componentDidMount() {
     this.fetchCategories()
   }
+
+  navigateBack = () => {
+    setTimeout(() => {
+      this.props.history.push('/admin')
+    }, 300)
+  }
   
   fetchCategories() {
     axios.get('/api/admin/categories')
     .then(response => {
-      console.log(response)
       this.setState({
         ...this.state,
         categories: response.data.categories
@@ -169,7 +180,12 @@ class AdminCategories extends Component {
   render() {
     return (
       <div style={style.container}>
-        <h2>Categories - Admin</h2>
+        <h2 style={style.header}>
+          <IconButton onClick={this.navigateBack}>
+            <Icon type='Back'/>
+          </IconButton>
+          Categories - Admin
+        </h2>
         <List>
           {
             this.state.categories.map(c =>
@@ -226,7 +242,7 @@ class AdminCategories extends Component {
           </DialogActions>
         </Dialog>
         <Button fab color="primary" style={style.fab} onClick={_once(this.addCategory)}>
-          <AddIcon />
+          <Icon type='Plus' />
         </Button>
       </div>
     )

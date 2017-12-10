@@ -23,7 +23,7 @@ class Home extends Component {
     return this.props.user.role === 'admin'
   }
 
-  navigateTo (path) {
+  navigateTo(path) {
     this.props.history.push('/admin/' + path)
   }
 
