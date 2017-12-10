@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import _once from 'lodash/once'
 
 import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
