@@ -10,12 +10,16 @@ import Colors from '../components/Colors'
 
 const style = {
   container: {
-    padding: 20
   },
   header: {
     display: 'flex',
     alignItems: 'center',
     color: Colors.ink.lighter
+  },
+  tableContainer: {
+    width: '100%',
+    maxWidth: 600,
+    overflowX: 'scroll'
   }
 }
 
@@ -59,26 +63,30 @@ class AdminUsers extends Component {
           </IconButton>
           Users - Admin
         </h2>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell numeric>XP</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              this.state.users.map(c =>
-                <TableRow key={c.id}>
-                  <TableCell>{c.name}</TableCell>
-                  <TableCell numeric>{c.role}</TableCell>
-                  <TableCell numeric>{c.xp}</TableCell>
-                </TableRow>
-              )
-            }
-          </TableBody>
-        </Table>
+        <div style={style.tableContainer}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Role</TableCell>
+                <TableCell numeric>XP</TableCell>
+                <TableCell numeric>Rank</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                this.state.users.map(c =>
+                  <TableRow key={c.id}>
+                    <TableCell>{c.name}</TableCell>
+                    <TableCell numeric>{c.role}</TableCell>
+                    <TableCell numeric>{c.xp}</TableCell>
+                    <TableCell numeric>{c.rank}</TableCell>
+                  </TableRow>
+                )
+              }
+            </TableBody>
+          </Table>
+        </div>
       </div>
     )
   }
