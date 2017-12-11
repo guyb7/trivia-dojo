@@ -10,7 +10,7 @@ export default async category => {
   const shuffledAnswers = questions.map(q => ({
     id: q.id,
     question: q.question,
-    options: _shuffle(q.options)
+    options: _shuffle([ ...q.options, q.answer ])
   }))
   return {
     category,

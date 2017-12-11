@@ -57,7 +57,7 @@ class AdminCategories extends Component {
       this.props.history.push('/admin')
     }, 300)
   }
-  
+
   fetchCategories() {
     axios.get('/api/admin/categories')
     .then(response => {
@@ -121,12 +121,13 @@ class AdminCategories extends Component {
       ...this.state,
       isDisabled: true
     }, () => {
+      const categoryId = this.state.originalId
       const method = this.state.isEdit ? 'put' : 'post'
-      axios[method]('/api/admin/categories/' + (this.state.originalId || ''), this.state.modalCategory)
+      axios[method]('/api/admin/categories/' + (categoryId || ''), this.state.modalCategory)
       .then(response => {
         const newCategories = this.state.isEdit ?
           this.state.categories.map(c => {
-            if (c.id === this.state.originalId) {
+            if (c.id === categoryId) {
               return { ...this.state.modalCategory }
             }
             return c
@@ -151,7 +152,7 @@ class AdminCategories extends Component {
       })
     })
   }
-  
+
   deleteCategory = () => {
     this.setState({
       ...this.state,
