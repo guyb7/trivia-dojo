@@ -2,12 +2,14 @@ import EloRank from 'elo-rank'
 import _each from 'lodash/each'
 import _mean from 'lodash/mean'
 
+import clearUserQuiz from './clearUserQuiz'
 import { getUserCategories } from '../Categories'
 import { query } from '../../Server/DB'
 
 const elo = new EloRank(20)
 
-const getQuestionsData = async userAnswers => {
+const getQuestionsData = async ({ quizId, userAnswers }) => {
+  //TODO validate questions list with quizId
   const ids = userAnswers.reduce((acc, q) => {
     acc.push(q.id.replace(/[^0-9a-f-]/g, ''))
     return acc
@@ -89,7 +91,8 @@ const updateQuestionsRank = async questionsNewRanks => {
 export default async req => {
   const userId = req.session.user.id
   const userAnswers = req.body.questions
-  const questions = await getQuestionsData(userAnswers)
+  const quizId = req.body.quizId
+  const questions = await getQuestionsData({ quizId, userAnswers })
   const userRanks = await getUserRanks(userId)
   let score = 0
   let maxQuizScore = 0
@@ -124,6 +127,7 @@ export default async req => {
 
   await updateUserRanks(userNewRanks, userId)
   await updateQuestionsRank(questionsNewRanks)
+  await clearUserQuiz({ userId, quizId })
 
   return {
     success: true,

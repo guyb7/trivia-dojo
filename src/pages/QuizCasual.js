@@ -135,7 +135,7 @@ class QuizCasual extends Component {
   }
 
   getNewQuiz() {
-    axios.get('/api/quiz/music')
+    axios.get('/api/quiz?category=music')
     .then(response => {
       this.setState({
         ...this.state,

@@ -1,7 +1,9 @@
-import getQuizByCategory from './getByCategory'
+import getQuestions from './getQuestions'
+import getUserQuiz from './getUserQuiz'
 import submitQuiz from './submit'
 
 export {
   submitQuiz,
-  getQuizByCategory
+  getQuestions,
+  getUserQuiz
 }

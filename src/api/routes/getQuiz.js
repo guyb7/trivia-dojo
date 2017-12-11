@@ -1,6 +1,8 @@
-import { getQuizByCategory } from '../controllers/Quiz/'
+import { getQuestions } from '../controllers/Quiz/'
 
 export default async req => {
-  const quiz = await getQuizByCategory(req.params.category)
+  const { category = 'general', mode = 'casual' } = req.query
+  const userId = req.session.user.id
+  const quiz = await getQuestions({ category, mode, userId })
   return quiz
 }
