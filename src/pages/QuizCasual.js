@@ -78,6 +78,7 @@ class QuizCasual extends Component {
       isSubmitted: false,
       isSubmitting: false,
       currentQuestion: 0,
+      quizId: false,
       quizQuestions: [],
       quizResults: false,
       isResultsVisible: false
@@ -140,6 +141,7 @@ class QuizCasual extends Component {
       this.setState({
         ...this.state,
         isLoading: false,
+        quizId: response.data.quizId,
         quizQuestions: response.data.questions.map(q => {
           return {
             ...q,
@@ -273,7 +275,7 @@ class QuizCasual extends Component {
         answer: q.chosenAnswer
       }
     })
-    axios.post('/api/quiz', { questions })
+    axios.post('/api/quiz/' + this.state.quizId, { questions })
     .then(res => this.handleSubmitResults(res))
     .catch(error => {
       console.error(error)

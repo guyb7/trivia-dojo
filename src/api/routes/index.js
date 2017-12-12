@@ -51,7 +51,7 @@ export default app => {
   app.get ('/api/status', asyncMiddleware(getStatus))
   app.get ('/api/profile', asyncMiddleware(getProfile))
   app.get ('/api/quiz', asyncMiddleware(getQuiz))
-  app.post('/api/quiz', asyncMiddleware(postQuiz))
+  app.post('/api/quiz/:quizId', asyncMiddleware(postQuiz))
 
   app.use   ('/api/admin/*', ensureAdmin)
   app.get   ('/api/admin/categories', asyncMiddleware(adminGetCategories))

@@ -3,24 +3,20 @@ import _each from 'lodash/each'
 import _mean from 'lodash/mean'
 
 import clearUserQuiz from './clearUserQuiz'
+import getUserQuiz from './getUserQuiz'
+import getQuestionsById from './getQuestionsById'
 import { getUserCategories } from '../Categories'
 import { query } from '../../Server/DB'
 
 const elo = new EloRank(20)
 
-const getQuestionsData = async ({ quizId, userAnswers }) => {
-  //TODO validate questions list with quizId
-  const ids = userAnswers.reduce((acc, q) => {
-    acc.push(q.id.replace(/[^0-9a-f-]/g, ''))
-    return acc
-  }, [])
-  const idsSql = ids.join("','")
-  const res = await query(`
-    SELECT id, answer, category, rank
-    FROM questions
-    WHERE id IN ('${idsSql}')
-  `)
-  const dict = res.rows.reduce((acc, q) => {
+const getQuestionsData = async quizId => {
+  const userQuiz = await getUserQuiz({ quizId })
+  if (!userQuiz) {
+    throw new Error('no-such-quiz')
+  }
+  const quizQuestions = await getQuestionsById(userQuiz.questions)
+  const dict = quizQuestions.rows.reduce((acc, q) => {
     acc[q.id] = { ...q }
     return acc
   }, {})
@@ -91,8 +87,8 @@ const updateQuestionsRank = async questionsNewRanks => {
 export default async req => {
   const userId = req.session.user.id
   const userAnswers = req.body.questions
-  const quizId = req.body.quizId
-  const questions = await getQuestionsData({ quizId, userAnswers })
+  const quizId = req.params.quizId
+  const questions = await getQuestionsData(quizId)
   const userRanks = await getUserRanks(userId)
   let score = 0
   let maxQuizScore = 0

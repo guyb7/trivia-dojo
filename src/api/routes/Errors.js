@@ -61,6 +61,11 @@ const errors = {
     id: 20,
     code: 400,
     message: 'You are not logged in'
+  },
+  'no-such-quiz': {
+    id: 21,
+    code: 400,
+    message: 'This quiz does not exist'
   }
 }
 
