@@ -44,15 +44,21 @@ class LevelProgress extends Component {
     return this.props.size === 'big'
   }
 
+  onClick = () => {
+    if (this.props.onClick) {
+      this.props.onClick()
+    }
+  }
+
   render() {
     return (
       <div
         style={{
           ...style.container,
           ...(this.isBig() ? style.containerBig : {}),
-          ...this.props.style,
+          ...this.props.style
         }}
-        onClick={e => this.props.onClick(e)}
+        onClick={this.onClick}
         >
         <div
           style={{
