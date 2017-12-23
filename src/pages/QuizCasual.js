@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import _each from 'lodash/each'
 import _get from 'lodash/get'
+import _has from 'lodash/has'
 import _once from 'lodash/once'
 import _findIndex from 'lodash/findIndex'
 
-import { addCategories, addNotification } from '../store/actions'
+import { addCategories, addNotification, setLevelXp } from '../store/actions'
 
 import Question from '../components/Quiz/Question'
 import QuizProgress from '../components/Quiz/QuizProgress'
@@ -321,6 +322,9 @@ class QuizCasual extends Component {
         quizResults: { ...results }
       })
     }, delay * (this.state.quizQuestions.length + 1))
+    if (_has(data, 'profileChanges.xp')) {
+      this.props.increaseUserXp(this.props.userXp + data.profileChanges.xp)
+    }
     // if (_has(data, 'profileChanges.achievements')) {
     //   _each(data.profileChanges.achievements, achievement => {
     //     setTimeout(() => {
@@ -410,7 +414,8 @@ class QuizCasual extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    userXp: state.level.xp
   }
 }
 
@@ -426,6 +431,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         autoHideDuration: 3000,
         icon: achievement.image
       }))
+    },
+    increaseUserXp: xp => {
+      dispatch(setLevelXp(xp))
     }
   }
 }
