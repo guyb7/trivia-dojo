@@ -3,12 +3,14 @@ import _each from 'lodash/each'
 import _mean from 'lodash/mean'
 
 import clearUserQuiz from './clearUserQuiz'
+import addXp from '../Progress/addXp'
 import getUserQuiz from './getUserQuiz'
 import getQuestionsById from './getQuestionsById'
 import { getUserCategories } from '../Categories'
 import { query } from '../../Server/DB'
 
 const elo = new EloRank(20)
+const MINIMUM_XP_FOR_QUIZ = 20
 
 const getQuestionsData = async quizId => {
   const userQuiz = await getUserQuiz({ quizId })
@@ -91,6 +93,7 @@ export default async req => {
   const questions = await getQuestionsData(quizId)
   const userRanks = await getUserRanks(userId)
   let score = 0
+  let xp = MINIMUM_XP_FOR_QUIZ
   let maxQuizScore = 0
   const userNewRanks = {}
   const questionsNewRanks = []
@@ -118,11 +121,17 @@ export default async req => {
       isCorrect: is_correct,
       score: questionScore
     }
+
+    if (is_correct) {
+      xp++
+    }
+
     return acc
   }, {})
 
   await updateUserRanks(userNewRanks, userId)
   await updateQuestionsRank(questionsNewRanks)
+  await addXp({ userId, xp })
   await clearUserQuiz({ userId, quizId })
 
   return {
@@ -133,7 +142,7 @@ export default async req => {
       score
     },
     profileChanges: {
-      xp: score,
+      xp,
       achievements: [
         {
           image: 'MusicNote',
