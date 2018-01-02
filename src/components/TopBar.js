@@ -54,7 +54,7 @@ class TopBar extends Component {
 
   render() {
     return (
-      <div style={style.container}>
+      <div style={{ ...this.props.style, ...style.container }}>
         <LevelProgress
           onClick={() => this.props.openUserDrawer()}
           level={this.props.level.level}

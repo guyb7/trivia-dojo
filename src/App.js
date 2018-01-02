@@ -18,13 +18,16 @@ import './App.css'
 const style = {
   container: {
     height: '100%'
+  },
+  topbar: {
+    zIndex: 500
   }
 }
 
 const App = () => (
   <Provider store={store}>
     <div style={style.container}>
-      <TopBar />
+      <TopBar style={style.topbar} />
       <Profile />
       <Notifications />
       <Switch>
